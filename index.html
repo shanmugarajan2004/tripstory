@@ -1,0 +1,4400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TripStory — Live Your Journey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN SYSTEM
+   ============================================================ */
+:root {
+  --ink: #0a0a0f;
+  --ink-2: #1c1c28;
+  --ink-3: #2e2e42;
+  --mist: #f5f4f0;
+  --mist-2: #ede9e3;
+  --cream: #faf8f4;
+  --gold: #c9a84c;
+  --gold-light: #e8c96a;
+  --teal: #2d8f7b;
+  --teal-light: #3dba9e;
+  --coral: #e8634a;
+  --coral-light: #f28469;
+  --indigo: #4a5aef;
+  --indigo-light: #6b7bf7;
+  --sand: #d4b896;
+  --white: #ffffff;
+  --shadow-sm: 0 2px 12px rgba(10,10,15,0.08);
+  --shadow-md: 0 8px 32px rgba(10,10,15,0.12);
+  --shadow-lg: 0 20px 60px rgba(10,10,15,0.18);
+  --shadow-xl: 0 32px 80px rgba(10,10,15,0.25);
+  --radius: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --transition: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.serif { font-family: 'Fraunces', serif; }
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0 48px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.4s var(--transition);
+}
+
+nav.scrolled {
+  background: rgba(250,248,244,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(10,10,15,0.06);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-logo {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.nav-logo-dot {
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--ink-3);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s var(--transition);
+  text-decoration: none;
+  white-space: nowrap;
+  letter-spacing: 0.1px;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid transparent;
+}
+.btn-ghost:hover { border-color: var(--ink-3); }
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--white);
+}
+.btn-primary:hover {
+  background: var(--ink-2);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(10,10,15,0.2);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--ink);
+  font-weight: 600;
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(201,168,76,0.4);
+}
+
+.btn-teal {
+  background: linear-gradient(135deg, var(--teal), var(--teal-light));
+  color: var(--white);
+}
+.btn-teal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(45,143,123,0.4);
+}
+
+.btn-lg {
+  padding: 14px 32px;
+  font-size: 15px;
+}
+
+.btn-xl {
+  padding: 18px 40px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* ============================================================
+   PAGE SYSTEM
+   ============================================================ */
+.page {
+  display: none;
+  min-height: 100vh;
+  opacity: 0;
+  animation: fadeIn 0.5s var(--transition) forwards;
+}
+
+.page.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   LANDING PAGE
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  overflow: hidden;
+}
+
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  background: 
+    url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000&q=80') center/cover no-repeat;
+  opacity: 0.35;
+}
+
+.hero-bg-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(10,10,15,0.85) 0%,
+    rgba(10,10,15,0.4) 50%,
+    rgba(10,10,15,0.7) 100%
+  );
+}
+
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 48px 80px;
+  width: 100%;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding: 8px 16px;
+  border-radius: 100px;
+  color: var(--gold-light);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  animation: slideDown 0.8s var(--transition) 0.2s both;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(52px, 7vw, 96px);
+  font-weight: 700;
+  line-height: 1.0;
+  color: var(--white);
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+  animation: slideUp 0.9s var(--transition) 0.3s both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+  max-width: 560px;
+  margin-bottom: 44px;
+  animation: slideUp 0.9s var(--transition) 0.4s both;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  animation: slideUp 0.9s var(--transition) 0.5s both;
+  flex-wrap: wrap;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 72px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  animation: slideUp 0.9s var(--transition) 0.7s both;
+}
+
+.stat-item { text-align: left; }
+
+.stat-num {
+  font-family: 'Fraunces', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Floating cards on hero */
+.hero-float {
+  position: absolute;
+  right: 6%;
+  bottom: 15%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: floatIn 1s var(--transition) 0.8s both;
+  z-index: 2;
+}
+
+@keyframes floatIn {
+  from { opacity: 0; transform: translateX(32px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.float-card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  color: var(--white);
+  min-width: 220px;
+}
+
+.float-card-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 6px;
+}
+
+.float-card-value {
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.float-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--teal-light);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.4);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: scrollHint 3s ease-in-out infinite;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+  animation: scrollLine 1.5s ease-in-out infinite;
+}
+
+@keyframes scrollLine {
+  0%, 100% { transform: scaleY(1); opacity: 0.4; }
+  50% { transform: scaleY(0.5); opacity: 0.1; }
+}
+
+/* ============================================================
+   FEATURES SECTION
+   ============================================================ */
+.section {
+  padding: 100px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-full {
+  padding: 100px 48px;
+}
+
+.section-eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--teal);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  color: var(--ink);
+}
+
+.section-sub {
+  font-size: 17px;
+  color: var(--ink-3);
+  line-height: 1.6;
+  max-width: 560px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 64px;
+}
+
+.feature-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 40px 36px;
+  border: 1px solid var(--mist-2);
+  transition: all 0.35s var(--transition);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(45,143,123,0.04));
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+.feature-card:hover::before { opacity: 1; }
+
+.feature-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+
+.icon-teal { background: rgba(45,143,123,0.1); }
+.icon-gold { background: rgba(201,168,76,0.1); }
+.icon-coral { background: rgba(232,99,74,0.1); }
+.icon-indigo { background: rgba(74,90,239,0.1); }
+
+.feature-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+
+.feature-text {
+  font-size: 14px;
+  color: var(--ink-3);
+  line-height: 1.65;
+}
+
+/* ============================================================
+   STORIES SECTION
+   ============================================================ */
+.stories-bg {
+  background: var(--ink);
+  padding: 100px 48px;
+}
+
+.stories-inner { max-width: 1200px; margin: 0 auto; }
+
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  margin-top: 56px;
+}
+
+.story-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.35s var(--transition);
+  aspect-ratio: 3/4;
+}
+
+.story-card:first-child {
+  grid-row: span 2;
+  aspect-ratio: auto;
+}
+
+.story-card:hover { transform: scale(1.02); }
+
+.story-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s var(--transition);
+}
+
+.story-card:hover .story-img { transform: scale(1.06); }
+
+.story-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,10,15,0.9) 0%, transparent 60%);
+}
+
+.story-body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px;
+}
+
+.story-tag {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.story-title-sm {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.story-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+
+.story-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ============================================================
+   MAP PREVIEW SECTION
+   ============================================================ */
+.map-section {
+  padding: 100px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.map-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  margin-top: 64px;
+}
+
+.map-container {
+  background: var(--ink-2);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  height: 480px;
+  position: relative;
+  box-shadow: var(--shadow-xl);
+}
+
+.map-placeholder {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: linear-gradient(160deg, #0f1626, #1a2840, #0d1f1a);
+}
+
+/* SVG world dots */
+.map-dots {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.route-svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.map-info {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.map-info-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  border: 1px solid var(--mist-2);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  transition: all 0.3s var(--transition);
+}
+
+.map-info-card:hover {
+  transform: translateX(8px);
+  box-shadow: var(--shadow-md);
+}
+
+.map-info-num {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--teal);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.map-info-text strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.map-info-text span {
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+/* ============================================================
+   TESTIMONIALS
+   ============================================================ */
+.testimonials-bg {
+  background: linear-gradient(160deg, var(--mist) 0%, var(--cream) 100%);
+  padding: 100px 48px;
+}
+
+.testimonials-inner { max-width: 1200px; margin: 0 auto; }
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.testimonial-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  border: 1px solid var(--mist-2);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s var(--transition);
+  position: relative;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.testimonial-quote {
+  font-size: 40px;
+  line-height: 1;
+  color: var(--gold);
+  font-family: 'Fraunces', serif;
+  margin-bottom: 16px;
+}
+
+.testimonial-text {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-3);
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.testimonial-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.testimonial-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.testimonial-role {
+  font-size: 12px;
+  color: var(--ink-3);
+  margin-top: 2px;
+}
+
+/* ============================================================
+   CTA SECTION
+   ============================================================ */
+.cta-section {
+  padding: 100px 48px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cta-card {
+  background: var(--ink);
+  border-radius: var(--radius-xl);
+  padding: 80px 64px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-bg-blob {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%);
+  top: -100px;
+  right: -100px;
+  pointer-events: none;
+}
+
+.cta-bg-blob-2 {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45,143,123,0.1) 0%, transparent 70%);
+  bottom: -80px;
+  left: -60px;
+  pointer-events: none;
+}
+
+.cta-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -1.5px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.cta-sub {
+  font-size: 17px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.6;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.cta-btns {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--ink);
+  padding: 64px 48px 40px;
+  color: rgba(255,255,255,0.6);
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 64px;
+}
+
+.footer-brand p {
+  font-size: 14px;
+  line-height: 1.65;
+  margin-top: 16px;
+  max-width: 260px;
+}
+
+.footer-col h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 20px;
+}
+
+.footer-col ul { list-style: none; }
+
+.footer-col ul li {
+  margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.footer-col ul li a:hover { color: var(--white); }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+/* ============================================================
+   AUTH PAGES
+   ============================================================ */
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.auth-visual {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.auth-visual-bg {
+  position: absolute;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&q=80') center/cover;
+  opacity: 0.4;
+}
+
+.auth-visual-content {
+  position: relative;
+  z-index: 1;
+  padding: 60px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.auth-visual-quote {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  color: var(--white);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.3;
+  margin-top: auto;
+  margin-bottom: 24px;
+}
+
+.auth-form-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  background: var(--cream);
+}
+
+.auth-form-box {
+  width: 100%;
+  max-width: 420px;
+}
+
+.auth-title {
+  font-family: 'Fraunces', serif;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+.auth-sub {
+  font-size: 15px;
+  color: var(--ink-3);
+  margin-bottom: 40px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-3);
+  margin-bottom: 8px;
+  letter-spacing: 0.2px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--mist-2);
+  background: var(--white);
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ink);
+  transition: all 0.2s;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(45,143,123,0.1);
+}
+
+.form-btn {
+  width: 100%;
+  padding: 15px;
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--white);
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s var(--transition);
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.form-btn:hover {
+  background: var(--ink-2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(10,10,15,0.2);
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--ink-3);
+}
+
+.auth-switch a {
+  color: var(--teal);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 28px 0;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--mist-2);
+}
+
+.divider-text {
+  font-size: 12px;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.social-btn {
+  width: 100%;
+  padding: 13px;
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  border: 1.5px solid var(--mist-2);
+  transition: all 0.25s var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.social-btn:hover {
+  border-color: var(--ink-3);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: var(--white);
+  border-right: 1px solid var(--mist-2);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--mist-2);
+}
+
+.sidebar-logo {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+}
+
+.sidebar-nav {
+  padding: 20px 16px;
+  flex: 1;
+}
+
+.sidebar-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--ink-3);
+  padding: 0 12px;
+  margin-bottom: 8px;
+  margin-top: 20px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 2px;
+  text-decoration: none;
+}
+
+.sidebar-item:hover {
+  background: var(--mist);
+  color: var(--ink);
+}
+
+.sidebar-item.active {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.sidebar-item-icon { font-size: 18px; }
+
+.sidebar-footer {
+  padding: 20px 16px;
+  border-top: 1px solid var(--mist-2);
+}
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sidebar-user:hover { background: var(--mist); }
+
+.sidebar-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal), var(--indigo));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.sidebar-username {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.sidebar-handle {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+/* Dashboard main */
+.dash-main {
+  background: var(--mist);
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 36px;
+}
+
+.dash-greeting {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--ink);
+}
+
+.dash-date {
+  font-size: 14px;
+  color: var(--ink-3);
+  margin-top: 4px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 24px;
+  border: 1px solid transparent;
+  transition: all 0.3s var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-card:hover {
+  border-color: var(--mist-2);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-card-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.stat-card-val {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.stat-card-label {
+  font-size: 12px;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 6px;
+}
+
+.stat-card-change {
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 10px;
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 100px;
+}
+
+.change-up { background: rgba(45,143,123,0.1); color: var(--teal); }
+.change-down { background: rgba(232,99,74,0.1); color: var(--coral); }
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+}
+
+.panel {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid transparent;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.panel-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.panel-action {
+  font-size: 13px;
+  color: var(--teal);
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.trip-list-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--mist);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.trip-list-item:last-child { border-bottom: none; }
+
+.trip-list-item:hover { transform: translateX(4px); }
+
+.trip-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+}
+
+.trip-list-info { flex: 1; }
+
+.trip-list-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.trip-list-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.trip-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.badge-active { background: rgba(45,143,123,0.1); color: var(--teal); }
+.badge-planned { background: rgba(74,90,239,0.1); color: var(--indigo); }
+.badge-done { background: var(--mist); color: var(--ink-3); }
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--mist);
+}
+
+.activity-item:last-child { border-bottom: none; }
+
+.activity-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  background: var(--mist);
+}
+
+.activity-text { font-size: 13px; color: var(--ink-3); line-height: 1.5; }
+.activity-text strong { color: var(--ink); }
+.activity-time { font-size: 11px; color: var(--ink-3); margin-top: 4px; }
+
+/* Budget mini chart */
+.budget-bar-wrap { margin-bottom: 16px; }
+
+.budget-bar-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.budget-bar-label { color: var(--ink); font-weight: 500; }
+.budget-bar-val { color: var(--ink-3); }
+
+.budget-bar-bg {
+  height: 8px;
+  background: var(--mist);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.budget-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.6s var(--transition);
+}
+
+/* ============================================================
+   STORIES PAGE
+   ============================================================ */
+.stories-page-header {
+  background: var(--ink);
+  padding: 80px 48px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.stories-page-bg {
+  position: absolute;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1518684079-3c830dcef090?w=1600&q=80') center/cover;
+  opacity: 0.2;
+}
+
+.stories-page-title {
+  font-family: 'Fraunces', serif;
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -2px;
+  position: relative;
+}
+
+.stories-page-sub {
+  font-size: 17px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 12px;
+  position: relative;
+}
+
+.stories-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 100px;
+  padding: 8px 16px 8px 24px;
+  max-width: 500px;
+  margin: 32px auto 0;
+  position: relative;
+}
+
+.stories-search-bar input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--white);
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.stories-search-bar input::placeholder { color: rgba(255,255,255,0.4); }
+
+.stories-filter-row {
+  display: flex;
+  gap: 8px;
+  padding: 24px 48px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--mist-2);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  border: 1.5px solid var(--mist-2);
+  background: var(--white);
+  color: var(--ink-3);
+}
+
+.filter-chip:hover { border-color: var(--ink-3); color: var(--ink); }
+
+.filter-chip.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--white);
+}
+
+.stories-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px;
+}
+
+.stories-feed {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.feed-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--mist-2);
+  transition: all 0.35s var(--transition);
+  cursor: pointer;
+}
+
+.feed-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+.feed-img {
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.feed-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,10,15,0.4), transparent);
+}
+
+.feed-img-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(10,10,15,0.6);
+  backdrop-filter: blur(8px);
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  color: var(--white);
+  font-weight: 500;
+}
+
+.feed-body { padding: 20px; }
+
+.feed-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--teal);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.feed-title {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+  margin-bottom: 10px;
+  letter-spacing: -0.4px;
+}
+
+.feed-excerpt {
+  font-size: 13px;
+  color: var(--ink-3);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.feed-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid var(--mist);
+}
+
+.feed-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.feed-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.feed-actions {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.feed-action {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.feed-action:hover { color: var(--coral); }
+
+/* ============================================================
+   TRIP PLANNER
+   ============================================================ */
+.planner-page { background: var(--mist); }
+
+.planner-header {
+  background: var(--white);
+  padding: 24px 40px;
+  border-bottom: 1px solid var(--mist-2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.planner-title {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.planner-body {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  height: calc(100vh - 73px);
+}
+
+.planner-sidebar {
+  background: var(--white);
+  border-right: 1px solid var(--mist-2);
+  overflow-y: auto;
+  padding: 28px;
+}
+
+.planner-map {
+  background: var(--ink-2);
+  position: relative;
+  overflow: hidden;
+}
+
+.planner-map-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #0d1f1a, #1a2840, #0f1626);
+}
+
+.planner-steps {
+  margin-top: 24px;
+}
+
+.planner-step {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.planner-step::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 40px;
+  bottom: -20px;
+  width: 2px;
+  background: var(--mist-2);
+}
+
+.planner-step:last-child::before { display: none; }
+
+.step-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step-content { flex: 1; }
+
+.step-place {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.step-date {
+  font-size: 12px;
+  color: var(--ink-3);
+  margin: 4px 0 10px;
+}
+
+.step-activities { display: flex; flex-direction: column; gap: 6px; }
+
+.step-activity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink-3);
+  background: var(--mist);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.add-destination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px;
+  border: 2px dashed var(--mist-2);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+
+.add-destination:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+  background: rgba(45,143,123,0.04);
+}
+
+/* ============================================================
+   BUDGET TRACKER
+   ============================================================ */
+.budget-page { padding: 40px; background: var(--mist); min-height: 100vh; }
+
+.budget-inner { max-width: 1100px; margin: 0 auto; }
+
+.budget-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 36px;
+}
+
+.budget-total-card {
+  background: var(--ink);
+  border-radius: var(--radius-xl);
+  padding: 36px 40px;
+  color: var(--white);
+  grid-column: span 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.budget-total-blob {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.2), transparent);
+  right: -60px;
+  top: -100px;
+}
+
+.budget-total-num {
+  font-family: 'Fraunces', serif;
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -2px;
+  line-height: 1;
+  position: relative;
+}
+
+.budget-total-label {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.budget-progress-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 100px;
+  margin-top: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.budget-progress-fill {
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(to right, var(--gold), var(--gold-light));
+  width: 65%;
+}
+
+.expense-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.expense-cat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 20px;
+  border: 1px solid var(--mist-2);
+  transition: all 0.25s var(--transition);
+}
+
+.expense-cat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.expense-cat-emoji { font-size: 28px; margin-bottom: 12px; }
+
+.expense-cat-name {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ink-3);
+  margin-bottom: 6px;
+}
+
+.expense-cat-amt {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+}
+
+.expense-cat-pct {
+  font-size: 12px;
+  color: var(--ink-3);
+  margin-top: 4px;
+}
+
+.budget-charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* Chart placeholder */
+.chart-box {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  border: 1px solid var(--mist-2);
+  box-shadow: var(--shadow-sm);
+}
+
+.chart-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+
+.donut-wrap {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.donut {
+  width: 160px;
+  height: 160px;
+  flex-shrink: 0;
+}
+
+.donut-svg { width: 100%; height: 100%; }
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-text { font-size: 13px; color: var(--ink-3); }
+.legend-pct { font-size: 13px; font-weight: 600; color: var(--ink); margin-left: auto; }
+
+/* Bar chart */
+.bar-chart {
+  height: 160px;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 0 4px;
+}
+
+.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+.bar-fill {
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+  transition: height 0.5s var(--transition);
+  position: relative;
+}
+
+.bar-fill:hover::after {
+  content: attr(data-val);
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: var(--white);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.bar-label { font-size: 11px; color: var(--ink-3); }
+
+.expense-list {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--mist-2);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.expense-list-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--mist);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expense-row {
+  display: grid;
+  grid-template-columns: 40px 1fr auto auto;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--mist);
+  transition: background 0.2s;
+}
+
+.expense-row:last-child { border-bottom: none; }
+.expense-row:hover { background: var(--mist); }
+
+.expense-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: var(--mist);
+}
+
+.expense-name { font-size: 14px; font-weight: 500; color: var(--ink); }
+.expense-desc { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+.expense-date { font-size: 12px; color: var(--ink-3); }
+.expense-amount { font-size: 15px; font-weight: 700; color: var(--ink); }
+
+/* ============================================================
+   PROFILE PAGE
+   ============================================================ */
+.profile-header-bg {
+  background: var(--ink);
+  height: 240px;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-header-img {
+  position: absolute;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1600&q=80') center/cover;
+  opacity: 0.3;
+}
+
+.profile-main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.profile-top {
+  display: flex;
+  align-items: flex-end;
+  gap: 28px;
+  transform: translateY(-48px);
+  margin-bottom: -20px;
+}
+
+.profile-avatar-lg {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal), var(--indigo));
+  border: 4px solid var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--white);
+  flex-shrink: 0;
+  box-shadow: var(--shadow-md);
+}
+
+.profile-info { padding-bottom: 8px; }
+
+.profile-name {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+}
+
+.profile-handle { font-size: 14px; color: var(--ink-3); margin-top: 2px; }
+
+.profile-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 12px;
+  padding-bottom: 8px;
+}
+
+.profile-stats-row {
+  display: flex;
+  gap: 48px;
+  margin-bottom: 40px;
+  padding-top: 12px;
+}
+
+.profile-stat-num {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+}
+
+.profile-stat-label {
+  font-size: 13px;
+  color: var(--ink-3);
+  margin-top: 2px;
+}
+
+.profile-bio {
+  font-size: 15px;
+  color: var(--ink-3);
+  line-height: 1.6;
+  max-width: 560px;
+  margin-bottom: 40px;
+}
+
+.profile-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--mist-2);
+  margin-bottom: 32px;
+}
+
+.profile-tab {
+  padding: 14px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-3);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  margin-bottom: -1px;
+}
+
+.profile-tab.active {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.profile-tab:hover { color: var(--ink); }
+
+.profile-trips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.profile-trip-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  position: relative;
+  cursor: pointer;
+}
+
+.profile-trip-card:hover .profile-trip-img { transform: scale(1.06); }
+.profile-trip-card:hover .profile-trip-overlay { opacity: 1; }
+
+.profile-trip-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.4s var(--transition);
+}
+
+.profile-trip-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10,10,15,0.5);
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.profile-trip-name {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  color: var(--white);
+  font-weight: 600;
+}
+
+/* ============================================================
+   MAP PAGE
+   ============================================================ */
+.map-page {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+}
+
+.map-sidebar {
+  background: var(--white);
+  border-right: 1px solid var(--mist-2);
+  overflow-y: auto;
+  padding: 28px 24px;
+}
+
+.map-full {
+  background: linear-gradient(160deg, #0d1f1a, #1a2840, #0f1626);
+  position: relative;
+  overflow: hidden;
+}
+
+.route-legend {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  box-shadow: var(--shadow-md);
+}
+
+.route-stop {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.route-stop:last-child { margin-bottom: 0; }
+.route-stop:hover { transform: translateX(4px); }
+
+.stop-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  color: var(--white);
+}
+
+.stop-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+.stop-date { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+
+.map-controls {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.map-ctrl-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.95);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: var(--shadow-md);
+  transition: all 0.2s;
+  font-family: sans-serif;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.map-ctrl-btn:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ============================================================
+   NOTIFICATION TOAST
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  background: var(--ink);
+  color: var(--white);
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: var(--shadow-xl);
+  z-index: 9999;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: all 0.4s var(--transition);
+}
+
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--transition), transform 0.7s var(--transition);
+}
+
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .hero-float { display: none; }
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .story-grid { grid-template-columns: 1fr 1fr; }
+  .story-card:first-child { grid-row: auto; }
+  .map-layout { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr 1fr; }
+  .dashboard-layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .planner-body { grid-template-columns: 1fr; }
+  .planner-map { display: none; }
+  .expense-grid { grid-template-columns: 1fr 1fr; }
+  .budget-charts-row { grid-template-columns: 1fr; }
+  .profile-trips-grid { grid-template-columns: 1fr 1fr; }
+  .auth-page { grid-template-columns: 1fr; }
+  .auth-visual { display: none; }
+  .stories-feed { grid-template-columns: 1fr 1fr; }
+  .map-page { grid-template-columns: 1fr; }
+  .map-sidebar { display: none; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+  nav { padding: 0 20px; }
+  .hero-content { padding: 100px 24px 60px; }
+  .hero-stats { gap: 28px; flex-wrap: wrap; }
+  .section { padding: 64px 24px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .story-grid { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .stories-feed { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .expense-grid { grid-template-columns: 1fr 1fr; }
+  .profile-trips-grid { grid-template-columns: 1fr; }
+  .cta-card { padding: 48px 28px; }
+  .footer-top { grid-template-columns: 1fr; }
+  .stories-filter-row { padding: 16px 24px; }
+  .stories-main { padding: 24px; }
+  .profile-top { flex-direction: column; align-items: flex-start; }
+  .profile-actions { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="navbar">
+  <div class="nav-logo" onclick="navigateTo('home')">
+    <span class="nav-logo-dot"></span>TripStory
+  </div>
+  <ul class="nav-links">
+    <li><a onclick="navigateTo('home')">Home</a></li>
+    <li><a onclick="navigateTo('stories')">Explore Trips</a></li>
+    <li><a onclick="navigateTo('planner')">Trip Planner</a></li>
+    <li><a onclick="navigateTo('stories')">Stories</a></li>
+    <li><a onclick="navigateTo('map-page')">Route Map</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn btn-ghost" onclick="navigateTo('login')">Login</button>
+    <button class="btn btn-primary" onclick="navigateTo('signup')">Start for Free</button>
+  </div>
+</nav>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span id="toast-icon">✅</span>
+  <span id="toast-msg">Action completed</span>
+</div>
+
+<!-- ================================================================
+     PAGE: HOME
+     ================================================================ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-bg-img"></div>
+      <div class="hero-bg-gradient"></div>
+      <div class="hero-grain"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">✦ The World Is Waiting</div>
+      <h1 class="hero-title">
+        Document Every<br><em>Journey</em><br>You Take
+      </h1>
+      <p class="hero-sub">
+        Plan routes, share stories, track expenses, and relive your travels — all in one beautifully crafted platform.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-gold btn-xl" onclick="navigateTo('signup')">
+          Start Your Story →
+        </button>
+        <button class="btn btn-ghost btn-xl" style="color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.25);" onclick="navigateTo('stories')">
+          Explore Trips
+        </button>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">42k+</div>
+          <div class="stat-label">Stories Shared</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">180+</div>
+          <div class="stat-label">Countries Covered</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">8.4k</div>
+          <div class="stat-label">Active Travelers</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating cards -->
+    <div class="hero-float">
+      <div class="float-card">
+        <div class="float-card-label">Currently Active</div>
+        <div class="float-card-value">
+          <div class="float-dot"></div>
+          Sarah in Kyoto, Japan
+        </div>
+      </div>
+      <div class="float-card">
+        <div class="float-card-label">Latest Story</div>
+        <div class="float-card-value">🇮🇸 Iceland Road Trip — 14 days</div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section">
+    <div class="reveal">
+      <span class="section-eyebrow">Everything You Need</span>
+      <h2 class="section-title">Travel smarter,<br>share richer stories</h2>
+      <p class="section-sub">From route planning to expense tracking, TripStory gives you every tool to document your adventures.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card reveal" style="transition-delay:0.1s">
+        <div class="feature-icon icon-teal">🗺️</div>
+        <div class="feature-title">Interactive Route Maps</div>
+        <p class="feature-text">Visualize your entire journey on an interactive map. Draw routes, add stops, and see distances calculated in real time.</p>
+      </div>
+      <div class="feature-card reveal" style="transition-delay:0.2s">
+        <div class="feature-icon icon-gold">📖</div>
+        <div class="feature-title">Rich Travel Stories</div>
+        <p class="feature-text">Document every moment with photos, descriptions, and location tags. Create a beautiful travel journal that others can explore.</p>
+      </div>
+      <div class="feature-card reveal" style="transition-delay:0.3s">
+        <div class="feature-icon icon-coral">💰</div>
+        <div class="feature-title">Budget Tracking</div>
+        <p class="feature-text">Track every expense by category with beautiful charts. Manage your travel budget and never get caught overspending.</p>
+      </div>
+      <div class="feature-card reveal" style="transition-delay:0.1s">
+        <div class="feature-icon icon-indigo">📅</div>
+        <div class="feature-title">Itinerary Planner</div>
+        <p class="feature-text">Plan each day of your trip with a drag-and-drop timeline. Add activities, restaurants, and accommodations effortlessly.</p>
+      </div>
+      <div class="feature-card reveal" style="transition-delay:0.2s">
+        <div class="feature-icon icon-teal">🔍</div>
+        <div class="feature-title">Discover Destinations</div>
+        <p class="feature-text">Explore trending trips, filter by country, and bookmark destinations shared by thousands of travelers worldwide.</p>
+      </div>
+      <div class="feature-card reveal" style="transition-delay:0.3s">
+        <div class="feature-icon icon-gold">🤝</div>
+        <div class="feature-title">Community & Following</div>
+        <p class="feature-text">Follow travelers whose style inspires you. Like, comment, and save stories. Build your travel community.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRENDING STORIES -->
+  <div class="stories-bg">
+    <div class="stories-inner">
+      <div class="reveal">
+        <span class="section-eyebrow" style="color:var(--gold)">Trending Now</span>
+        <h2 class="section-title" style="color:var(--white)">Stories capturing<br>the world's imagination</h2>
+      </div>
+      <div class="story-grid reveal">
+        <div class="story-card" onclick="navigateTo('stories')">
+          <div class="story-img" style="background-image:url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80')"></div>
+          <div class="story-overlay"></div>
+          <div class="story-body">
+            <div class="story-tag">🏔️ Adventure</div>
+            <div class="story-title-sm">28 Days Across the Norwegian Fjords</div>
+            <div class="story-meta">
+              <div class="story-avatar">M</div>
+              Marcus L. · 14 days · $3,200
+            </div>
+          </div>
+        </div>
+        <div class="story-card" onclick="navigateTo('stories')">
+          <div class="story-img" style="background-image:url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800&q=80')"></div>
+          <div class="story-overlay"></div>
+          <div class="story-body">
+            <div class="story-tag">🌸 Culture</div>
+            <div class="story-title-sm">Tokyo Cherry Blossom Season</div>
+            <div class="story-meta">
+              <div class="story-avatar" style="background:var(--coral)">A</div>
+              Aiko T. · 7 days
+            </div>
+          </div>
+        </div>
+        <div class="story-card" onclick="navigateTo('stories')">
+          <div class="story-img" style="background-image:url('https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=800&q=80')"></div>
+          <div class="story-overlay"></div>
+          <div class="story-body">
+            <div class="story-tag">🍝 Food & Travel</div>
+            <div class="story-title-sm">Venice Hidden Canals & Secret Eats</div>
+            <div class="story-meta">
+              <div class="story-avatar" style="background:var(--indigo)">S</div>
+              Sofia R. · 5 days
+            </div>
+          </div>
+        </div>
+        <div class="story-card" onclick="navigateTo('stories')">
+          <div class="story-img" style="background-image:url('https://images.unsplash.com/photo-1489493887464-892be6d1daae?w=800&q=80')"></div>
+          <div class="story-overlay"></div>
+          <div class="story-body">
+            <div class="story-tag">🏜️ Desert</div>
+            <div class="story-title-sm">Sahara by Camel</div>
+            <div class="story-meta">
+              <div class="story-avatar" style="background:var(--teal)">J</div>
+              James K. · 10 days
+            </div>
+          </div>
+        </div>
+        <div class="story-card" onclick="navigateTo('stories')">
+          <div class="story-img" style="background-image:url('https://images.unsplash.com/photo-1540202404-a2f29016b523?w=800&q=80')"></div>
+          <div class="story-overlay"></div>
+          <div class="story-body">
+            <div class="story-tag">🌊 Island</div>
+            <div class="story-title-sm">Bali: Temples, Rice Fields & Surf</div>
+            <div class="story-meta">
+              <div class="story-avatar" style="background:var(--coral)">L</div>
+              Luna V. · 12 days
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:44px">
+        <button class="btn btn-ghost btn-lg" style="color:rgba(255,255,255,0.7);border-color:rgba(255,255,255,0.2)" onclick="navigateTo('stories')">
+          View All Stories →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAP PREVIEW -->
+  <section class="map-section">
+    <div class="reveal">
+      <span class="section-eyebrow">Route Visualization</span>
+      <h2 class="section-title">See every path<br>you've traveled</h2>
+    </div>
+    <div class="map-layout">
+      <div class="map-container reveal">
+        <div class="map-placeholder">
+          <svg viewBox="0 0 600 480" class="route-svg" style="position:absolute;inset:0">
+            <!-- Grid dots -->
+            <defs>
+              <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#3dba9e" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#3dba9e" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <!-- Dot grid suggesting world map -->
+            <g opacity="0.15" fill="#4a9e8e">
+              <!-- simplified dot pattern -->
+              <circle cx="80" cy="120" r="1.5"/><circle cx="100" cy="120" r="1.5"/><circle cx="120" cy="110" r="1.5"/><circle cx="140" cy="105" r="1.5"/><circle cx="160" cy="100" r="1.5"/><circle cx="180" cy="98" r="1.5"/><circle cx="200" cy="100" r="1.5"/><circle cx="220" cy="105" r="1.5"/><circle cx="80" cy="140" r="1.5"/><circle cx="100" cy="135" r="1.5"/><circle cx="120" cy="130" r="1.5"/><circle cx="140" cy="125" r="1.5"/><circle cx="160" cy="120" r="1.5"/><circle cx="180" cy="118" r="1.5"/><circle cx="200" cy="120" r="1.5"/><circle cx="220" cy="125" r="1.5"/><circle cx="240" cy="130" r="1.5"/><circle cx="260" cy="140" r="1.5"/>
+              <circle cx="300" cy="160" r="1.5"/><circle cx="320" cy="155" r="1.5"/><circle cx="340" cy="150" r="1.5"/><circle cx="360" cy="148" r="1.5"/><circle cx="380" cy="150" r="1.5"/><circle cx="400" cy="155" r="1.5"/><circle cx="420" cy="160" r="1.5"/><circle cx="440" cy="165" r="1.5"/><circle cx="460" cy="170" r="1.5"/><circle cx="480" cy="175" r="1.5"/><circle cx="500" cy="180" r="1.5"/><circle cx="520" cy="185" r="1.5"/>
+              <circle cx="300" cy="180" r="1.5"/><circle cx="320" cy="175" r="1.5"/><circle cx="340" cy="170" r="1.5"/><circle cx="360" cy="168" r="1.5"/><circle cx="380" cy="170" r="1.5"/><circle cx="400" cy="175" r="1.5"/>
+              <circle cx="80" cy="200" r="1.5"/><circle cx="100" cy="195" r="1.5"/><circle cx="120" cy="190" r="1.5"/><circle cx="140" cy="185" r="1.5"/><circle cx="160" cy="180" r="1.5"/><circle cx="180" cy="178" r="1.5"/><circle cx="200" cy="180" r="1.5"/><circle cx="220" cy="185" r="1.5"/><circle cx="240" cy="190" r="1.5"/>
+              <circle cx="80" cy="220" r="1.5"/><circle cx="100" cy="215" r="1.5"/><circle cx="120" cy="210" r="1.5"/><circle cx="140" cy="205" r="1.5"/><circle cx="160" cy="200" r="1.5"/>
+              <circle cx="420" cy="200" r="1.5"/><circle cx="440" cy="210" r="1.5"/><circle cx="460" cy="215" r="1.5"/><circle cx="480" cy="220" r="1.5"/><circle cx="500" cy="225" r="1.5"/>
+              <circle cx="420" cy="240" r="1.5"/><circle cx="440" cy="250" r="1.5"/><circle cx="460" cy="255" r="1.5"/>
+              <circle cx="80" cy="280" r="1.5"/><circle cx="100" cy="275" r="1.5"/><circle cx="120" cy="270" r="1.5"/><circle cx="140" cy="265" r="1.5"/>
+              <circle cx="200" cy="300" r="1.5"/><circle cx="220" cy="295" r="1.5"/><circle cx="240" cy="290" r="1.5"/><circle cx="260" cy="295" r="1.5"/>
+            </g>
+            <!-- Route path -->
+            <path d="M 120 130 Q 220 80 300 140 Q 380 200 460 165 Q 500 148 520 185" 
+                  stroke="#3dba9e" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity="0.8"/>
+            <!-- City markers -->
+            <circle cx="120" cy="130" r="20" fill="url(#glow1)" opacity="0.6"/>
+            <circle cx="120" cy="130" r="8" fill="#3dba9e" opacity="0.9"/>
+            <circle cx="120" cy="130" r="4" fill="white"/>
+            <circle cx="300" cy="140" r="16" fill="url(#glow1)" opacity="0.5"/>
+            <circle cx="300" cy="140" r="7" fill="#3dba9e" opacity="0.9"/>
+            <circle cx="300" cy="140" r="3" fill="white"/>
+            <circle cx="460" cy="165" r="22" fill="url(#glow2)" opacity="0.6"/>
+            <circle cx="460" cy="165" r="9" fill="#c9a84c" opacity="0.9"/>
+            <circle cx="460" cy="165" r="4" fill="white"/>
+            <circle cx="520" cy="185" r="14" fill="url(#glow1)" opacity="0.5"/>
+            <circle cx="520" cy="185" r="6" fill="#3dba9e" opacity="0.9"/>
+            <circle cx="520" cy="185" r="3" fill="white"/>
+            <!-- Labels -->
+            <text x="110" y="118" fill="white" font-size="11" font-family="DM Sans,sans-serif" opacity="0.9" font-weight="600">London</text>
+            <text x="290" y="128" fill="white" font-size="11" font-family="DM Sans,sans-serif" opacity="0.9" font-weight="600">Dubai</text>
+            <text x="445" y="153" fill="#e8c96a" font-size="11" font-family="DM Sans,sans-serif" opacity="0.9" font-weight="600">Tokyo</text>
+            <text x="508" y="173" fill="white" font-size="11" font-family="DM Sans,sans-serif" opacity="0.9" font-weight="600">Seoul</text>
+            <!-- Distance labels -->
+            <text x="195" y="88" fill="#3dba9e" font-size="10" opacity="0.7">5,540 km</text>
+            <text x="365" y="158" fill="#3dba9e" font-size="10" opacity="0.7">7,200 km</text>
+          </svg>
+        </div>
+        <div style="position:absolute;bottom:24px;left:24px;display:flex;gap:12px;">
+          <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);padding:10px 16px;border-radius:10px;font-size:12px;color:rgba(255,255,255,0.7);">
+            <span style="color:#3dba9e;font-weight:600">↗</span> Route active
+          </div>
+          <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);padding:10px 16px;border-radius:10px;font-size:12px;color:rgba(255,255,255,0.7);">
+            4 stops · 18,940 km
+          </div>
+        </div>
+      </div>
+
+      <div class="map-info reveal">
+        <div class="map-info-card">
+          <div class="map-info-num">4</div>
+          <div class="map-info-text">
+            <strong>Destinations on This Route</strong>
+            <span>London → Dubai → Tokyo → Seoul — a Grand Asian Pacific Circuit</span>
+          </div>
+        </div>
+        <div class="map-info-card">
+          <div class="map-info-num">18k</div>
+          <div class="map-info-text">
+            <strong>Kilometers Traveled</strong>
+            <span>Track total distance per trip automatically based on your waypoints</span>
+          </div>
+        </div>
+        <div class="map-info-card">
+          <div class="map-info-num">28</div>
+          <div class="map-info-text">
+            <strong>Days of Adventure</strong>
+            <span>Every day logged with activities, costs, and personal notes</span>
+          </div>
+        </div>
+        <button class="btn btn-teal btn-lg" onclick="navigateTo('map-page')" style="margin-top:8px">
+          Explore Route Maps →
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <div class="testimonials-bg">
+    <div class="testimonials-inner">
+      <div class="reveal" style="text-align:center">
+        <span class="section-eyebrow">Traveler Stories</span>
+        <h2 class="section-title" style="max-width:480px;margin:0 auto 16px">What our community says</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal" style="transition-delay:0.1s">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">TripStory completely changed how I document travels. Instead of scattered notes and photos, everything is in one gorgeous place. My friends constantly ask me how I made my trip pages.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" style="background:linear-gradient(135deg,var(--teal),var(--indigo))">M</div>
+            <div>
+              <div class="testimonial-name">Maya Chen</div>
+              <div class="testimonial-role">Digital Nomad · 32 countries</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal" style="transition-delay:0.2s">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">The budget tracker alone is worth it. I used to overspend constantly. Now I track every expense by category and I actually came home from Thailand under budget for the first time ever.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" style="background:linear-gradient(135deg,var(--coral),var(--gold))">R</div>
+            <div>
+              <div class="testimonial-name">Raj Patel</div>
+              <div class="testimonial-role">Backpacker · 18 countries</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal" style="transition-delay:0.3s">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">We use TripStory for every family vacation now. The itinerary planner keeps everyone on the same page and the kids love seeing the route on the map. It makes travel a shared adventure.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" style="background:linear-gradient(135deg,var(--indigo),var(--teal))">S</div>
+            <div>
+              <div class="testimonial-name">Sophie Durant</div>
+              <div class="testimonial-role">Family Traveler · 24 countries</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div style="padding:80px 48px">
+    <div class="cta-card">
+      <div class="cta-bg-blob"></div>
+      <div class="cta-bg-blob-2"></div>
+      <h2 class="cta-title">Your next adventure<br>starts with a story</h2>
+      <p class="cta-sub">Join 8,400+ travelers who use TripStory to plan, document, and share their journeys around the world.</p>
+      <div class="cta-btns">
+        <button class="btn btn-gold btn-xl" onclick="navigateTo('signup')">Create Free Account</button>
+        <button class="btn btn-ghost btn-xl" style="color:rgba(255,255,255,0.7);border-color:rgba(255,255,255,0.2)" onclick="navigateTo('stories')">Browse Stories</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="nav-logo" style="color:white;cursor:default">
+            <span class="nav-logo-dot"></span>TripStory
+          </div>
+          <p>The travel platform for explorers who want to document, share, and relive every journey.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <ul>
+            <li><a>Explore Stories</a></li>
+            <li><a>Trip Planner</a></li>
+            <li><a>Route Maps</a></li>
+            <li><a>Budget Tracker</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a>About Us</a></li>
+            <li><a>Blog</a></li>
+            <li><a>Careers</a></li>
+            <li><a>Press</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a>Privacy</a></li>
+            <li><a>Terms</a></li>
+            <li><a>Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 TripStory. Made with ❤️ for explorers.</span>
+        <span>✦ Live Your Journey</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ================================================================
+     PAGE: LOGIN
+     ================================================================ -->
+<div class="page" id="page-login">
+  <div class="auth-page" style="min-height:100vh">
+    <div class="auth-visual">
+      <div class="auth-visual-bg"></div>
+      <div class="auth-visual-content">
+        <div class="nav-logo" style="color:white;cursor:pointer" onclick="navigateTo('home')">
+          <span class="nav-logo-dot"></span>TripStory
+        </div>
+        <div>
+          <p class="auth-visual-quote">"Not all those who wander are lost — but all who use TripStory know exactly where they've been."</p>
+          <div style="display:flex;align-items:center;gap:12px;color:rgba(255,255,255,0.6);font-size:13px">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--ink)">A</div>
+            Adapted for every traveler
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-form-wrap">
+      <div class="auth-form-box">
+        <div style="margin-bottom:8px;font-size:13px;color:var(--ink-3);cursor:pointer" onclick="navigateTo('home')">← Back to Home</div>
+        <h1 class="auth-title">Welcome back</h1>
+        <p class="auth-sub">Sign in to continue your journey</p>
+
+        <div class="form-group">
+          <label class="form-label">Email address</label>
+          <input type="email" class="form-input" placeholder="you@email.com" id="login-email">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" placeholder="••••••••" id="login-pass">
+        </div>
+        <div style="text-align:right;font-size:13px;margin-top:-8px;margin-bottom:20px">
+          <a style="color:var(--teal);cursor:pointer;text-decoration:none">Forgot password?</a>
+        </div>
+        <button class="form-btn" onclick="handleLogin()">
+          <span id="login-btn-text">Sign In</span>
+        </button>
+
+        <div class="divider">
+          <div class="divider-line"></div>
+          <div class="divider-text">or continue with</div>
+          <div class="divider-line"></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <button class="social-btn">🌐 Google</button>
+          <button class="social-btn">🍎 Apple</button>
+        </div>
+
+        <div class="auth-switch">
+          No account? <a onclick="navigateTo('signup')">Create one free</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     PAGE: SIGNUP
+     ================================================================ -->
+<div class="page" id="page-signup">
+  <div class="auth-page" style="min-height:100vh">
+    <div class="auth-visual" style="background:var(--ink)">
+      <div class="auth-visual-bg" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80')"></div>
+      <div class="auth-visual-content">
+        <div class="nav-logo" style="color:white;cursor:pointer" onclick="navigateTo('home')">
+          <span class="nav-logo-dot"></span>TripStory
+        </div>
+        <div>
+          <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:32px">
+            <div style="display:flex;align-items:center;gap:12px;color:rgba(255,255,255,0.8);font-size:14px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:16px">✓</div>
+              Unlimited trip stories
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;color:rgba(255,255,255,0.8);font-size:14px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:16px">✓</div>
+              Interactive route maps
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;color:rgba(255,255,255,0.8);font-size:14px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:16px">✓</div>
+              Budget tracker & analytics
+            </div>
+          </div>
+          <p class="auth-visual-quote">"Every journey deserves to be remembered beautifully."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-form-wrap">
+      <div class="auth-form-box">
+        <div style="margin-bottom:8px;font-size:13px;color:var(--ink-3);cursor:pointer" onclick="navigateTo('home')">← Back to Home</div>
+        <h1 class="auth-title">Start your story</h1>
+        <p class="auth-sub">Create a free account in seconds</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="form-group">
+            <label class="form-label">First name</label>
+            <input type="text" class="form-input" placeholder="Alex">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last name</label>
+            <input type="text" class="form-input" placeholder="Journey">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email address</label>
+          <input type="email" class="form-input" placeholder="you@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" placeholder="Min 8 characters">
+        </div>
+        <div style="font-size:12px;color:var(--ink-3);margin-bottom:20px">
+          By signing up, you agree to our <a style="color:var(--teal)">Terms of Service</a> and <a style="color:var(--teal)">Privacy Policy</a>.
+        </div>
+        <button class="form-btn" onclick="handleSignup()">Create Free Account 🚀</button>
+
+        <div class="divider">
+          <div class="divider-line"></div>
+          <div class="divider-text">or</div>
+          <div class="divider-line"></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <button class="social-btn">🌐 Google</button>
+          <button class="social-btn">🍎 Apple</button>
+        </div>
+
+        <div class="auth-switch">
+          Already have an account? <a onclick="navigateTo('login')">Sign in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     PAGE: DASHBOARD
+     ================================================================ -->
+<div class="page" id="page-dashboard">
+  <div class="dashboard-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">TripStory</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-label">Main</div>
+        <div class="sidebar-item active">
+          <span class="sidebar-item-icon">🏠</span> Dashboard
+        </div>
+        <div class="sidebar-item" onclick="navigateTo('stories')">
+          <span class="sidebar-item-icon">📖</span> My Stories
+        </div>
+        <div class="sidebar-item" onclick="navigateTo('planner')">
+          <span class="sidebar-item-icon">🗺️</span> Trip Planner
+        </div>
+        <div class="sidebar-item" onclick="navigateTo('map-page')">
+          <span class="sidebar-item-icon">📍</span> Route Maps
+        </div>
+        <div class="sidebar-item" onclick="navigateTo('budget')">
+          <span class="sidebar-item-icon">💰</span> Budget Tracker
+        </div>
+        <div class="sidebar-section-label">Discover</div>
+        <div class="sidebar-item" onclick="navigateTo('stories')">
+          <span class="sidebar-item-icon">🔍</span> Explore
+        </div>
+        <div class="sidebar-item">
+          <span class="sidebar-item-icon">🌍</span> Trending Destinations
+        </div>
+        <div class="sidebar-item">
+          <span class="sidebar-item-icon">🔖</span> Bookmarked
+        </div>
+        <div class="sidebar-section-label">Account</div>
+        <div class="sidebar-item" onclick="navigateTo('profile')">
+          <span class="sidebar-item-icon">👤</span> My Profile
+        </div>
+        <div class="sidebar-item">
+          <span class="sidebar-item-icon">⚙️</span> Settings
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-avatar">A</div>
+          <div>
+            <div class="sidebar-username">Alex Journey</div>
+            <div class="sidebar-handle">@alexj · Pro</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dash-main">
+      <div class="dash-header">
+        <div>
+          <div class="dash-greeting">Good morning, Alex ✈️</div>
+          <div class="dash-date">Thursday, March 12, 2026</div>
+        </div>
+        <button class="btn btn-primary" onclick="navigateTo('planner')">+ New Trip</button>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-card-icon">✈️</div>
+          <div class="stat-card-val">23</div>
+          <div class="stat-card-label">Trips Taken</div>
+          <div class="stat-card-change change-up">↑ 3 this year</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">🌍</div>
+          <div class="stat-card-val">31</div>
+          <div class="stat-card-label">Countries Visited</div>
+          <div class="stat-card-change change-up">↑ 4 new</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">📖</div>
+          <div class="stat-card-val">18</div>
+          <div class="stat-card-label">Stories Published</div>
+          <div class="stat-card-change change-up">↑ 892 likes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">💵</div>
+          <div class="stat-card-val">$2.4k</div>
+          <div class="stat-card-label">Avg Trip Budget</div>
+          <div class="stat-card-change change-down">↑ 8% vs last yr</div>
+        </div>
+      </div>
+
+      <!-- Main grid -->
+      <div class="dash-grid">
+        <div style="display:flex;flex-direction:column;gap:24px">
+          <!-- Trips -->
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">My Trips</span>
+              <a class="panel-action" onclick="navigateTo('planner')">+ New Trip</a>
+            </div>
+            <div class="trip-list-item">
+              <div class="trip-thumb" style="background-image:url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=200&q=80')"></div>
+              <div class="trip-list-info">
+                <div class="trip-list-name">Japan Spring 2026</div>
+                <div class="trip-list-meta">
+                  <span>📅 Apr 1–14</span>
+                  <span>💰 $3,800 budget</span>
+                  <span>5 destinations</span>
+                </div>
+              </div>
+              <div class="trip-badge badge-planned">Planned</div>
+            </div>
+            <div class="trip-list-item">
+              <div class="trip-thumb" style="background-image:url('https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=200&q=80')"></div>
+              <div class="trip-list-info">
+                <div class="trip-list-name">Italy & Croatia</div>
+                <div class="trip-list-meta">
+                  <span>📅 Jun 10–24</span>
+                  <span>💰 $4,200 budget</span>
+                  <span>8 destinations</span>
+                </div>
+              </div>
+              <div class="trip-badge badge-planned">Planned</div>
+            </div>
+            <div class="trip-list-item">
+              <div class="trip-thumb" style="background-image:url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=200&q=80')"></div>
+              <div class="trip-list-info">
+                <div class="trip-list-name">Norway Fjords 2025</div>
+                <div class="trip-list-meta">
+                  <span>📅 Sep 2025</span>
+                  <span>💰 $5,100 spent</span>
+                  <span>6 destinations</span>
+                </div>
+              </div>
+              <div class="trip-badge badge-done">Completed</div>
+            </div>
+            <div class="trip-list-item">
+              <div class="trip-thumb" style="background-image:url('https://images.unsplash.com/photo-1540202404-a2f29016b523?w=200&q=80')"></div>
+              <div class="trip-list-info">
+                <div class="trip-list-name">Bali Escape 2025</div>
+                <div class="trip-list-meta">
+                  <span>📅 Jul 2025</span>
+                  <span>💰 $2,800 spent</span>
+                  <span>4 destinations</span>
+                </div>
+              </div>
+              <div class="trip-badge badge-done">Completed</div>
+            </div>
+          </div>
+
+          <!-- Budget Summary -->
+          <div class="panel" onclick="navigateTo('budget')" style="cursor:pointer">
+            <div class="panel-header">
+              <span class="panel-title">Budget Overview — 2026</span>
+              <a class="panel-action">Details →</a>
+            </div>
+            <div class="budget-bar-wrap">
+              <div class="budget-bar-header">
+                <span class="budget-bar-label">🏨 Accommodation</span>
+                <span class="budget-bar-val">$1,240 / $2,000</span>
+              </div>
+              <div class="budget-bar-bg">
+                <div class="budget-bar-fill" style="width:62%;background:linear-gradient(to right,var(--teal),var(--teal-light))"></div>
+              </div>
+            </div>
+            <div class="budget-bar-wrap">
+              <div class="budget-bar-header">
+                <span class="budget-bar-label">✈️ Transport</span>
+                <span class="budget-bar-val">$2,100 / $3,000</span>
+              </div>
+              <div class="budget-bar-bg">
+                <div class="budget-bar-fill" style="width:70%;background:linear-gradient(to right,var(--indigo),var(--indigo-light))"></div>
+              </div>
+            </div>
+            <div class="budget-bar-wrap">
+              <div class="budget-bar-header">
+                <span class="budget-bar-label">🍜 Food & Dining</span>
+                <span class="budget-bar-val">$680 / $1,500</span>
+              </div>
+              <div class="budget-bar-bg">
+                <div class="budget-bar-fill" style="width:45%;background:linear-gradient(to right,var(--gold),var(--gold-light))"></div>
+              </div>
+            </div>
+            <div class="budget-bar-wrap">
+              <div class="budget-bar-header">
+                <span class="budget-bar-label">🎭 Activities</span>
+                <span class="budget-bar-val">$340 / $800</span>
+              </div>
+              <div class="budget-bar-bg">
+                <div class="budget-bar-fill" style="width:42%;background:linear-gradient(to right,var(--coral),var(--coral-light))"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right column -->
+        <div style="display:flex;flex-direction:column;gap:24px">
+          <!-- Activity feed -->
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">Recent Activity</span>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">📖</div>
+              <div>
+                <div class="activity-text"><strong>You published</strong> "First 48 Hours in Kyoto"</div>
+                <div class="activity-time">2h ago · 34 likes</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">🗺️</div>
+              <div>
+                <div class="activity-text"><strong>Route saved</strong> for Japan Spring 2026 — 5 stops</div>
+                <div class="activity-time">Yesterday</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">💬</div>
+              <div>
+                <div class="activity-text"><strong>Maya Chen</strong> commented on your Bali story</div>
+                <div class="activity-time">2 days ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">❤️</div>
+              <div>
+                <div class="activity-text">Your Norway story reached <strong>500 likes</strong>!</div>
+                <div class="activity-time">3 days ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">👤</div>
+              <div>
+                <div class="activity-text"><strong>12 new followers</strong> this week</div>
+                <div class="activity-time">This week</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upcoming -->
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">Upcoming Trip</span>
+              <a class="panel-action" onclick="navigateTo('planner')">Edit →</a>
+            </div>
+            <div style="background:linear-gradient(135deg,var(--teal),var(--indigo));border-radius:12px;padding:20px;color:white;margin-bottom:16px">
+              <div style="font-size:12px;opacity:0.7;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Next Adventure</div>
+              <div style="font-family:'Fraunces',serif;font-size:22px;font-weight:700;margin-bottom:4px">Japan Spring 2026</div>
+              <div style="font-size:13px;opacity:0.8">April 1–14 · Tokyo, Kyoto, Osaka, Nara, Hakone</div>
+              <div style="margin-top:16px;font-size:13px;background:rgba(255,255,255,0.15);padding:8px 14px;border-radius:8px;display:inline-block">
+                🗓️ Starts in 20 days
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--ink-3)">
+              <span>💰 Budget: $3,800</span>
+              <span>📍 5 destinations</span>
+              <span>📅 14 days</span>
+            </div>
+          </div>
+
+          <!-- Quick actions -->
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">Quick Actions</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <button class="btn btn-primary" onclick="navigateTo('planner')" style="justify-content:center;border-radius:10px;padding:13px">🗺️ Plan Trip</button>
+              <button class="btn btn-ghost" onclick="navigateTo('stories')" style="justify-content:center;border-radius:10px;padding:13px;border-color:var(--mist-2)">📖 New Story</button>
+              <button class="btn btn-ghost" onclick="navigateTo('budget')" style="justify-content:center;border-radius:10px;padding:13px;border-color:var(--mist-2)">💰 Add Expense</button>
+              <button class="btn btn-ghost" onclick="navigateTo('map-page')" style="justify-content:center;border-radius:10px;padding:13px;border-color:var(--mist-2)">📍 View Routes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ================================================================
+     PAGE: STORIES
+     ================================================================ -->
+<div class="page" id="page-stories">
+  <div class="stories-page-header">
+    <div class="stories-page-bg"></div>
+    <h1 class="stories-page-title">Travel Stories</h1>
+    <p class="stories-page-sub">Discover 42,000+ real travel experiences from around the world</p>
+    <div class="stories-search-bar">
+      <span>🔍</span>
+      <input type="text" placeholder="Search destinations, stories, travelers...">
+      <button class="btn btn-gold" style="padding:8px 18px;font-size:13px">Search</button>
+    </div>
+  </div>
+
+  <div class="stories-filter-row">
+    <div class="filter-chip active">All Stories</div>
+    <div class="filter-chip">🏔️ Adventure</div>
+    <div class="filter-chip">🌸 Culture</div>
+    <div class="filter-chip">🍜 Food & Drink</div>
+    <div class="filter-chip">🏖️ Beach</div>
+    <div class="filter-chip">🌿 Nature</div>
+    <div class="filter-chip">🏙️ City Breaks</div>
+    <div class="filter-chip">🎒 Backpacking</div>
+    <div class="filter-chip">👨‍👩‍👧 Family</div>
+    <div class="filter-chip">💑 Couples</div>
+    <div class="filter-chip">🇯🇵 Japan</div>
+    <div class="filter-chip">🇮🇹 Italy</div>
+    <div class="filter-chip">🇮🇸 Iceland</div>
+  </div>
+
+  <div class="stories-main">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px">
+      <div style="font-size:15px;color:var(--ink-3)">Showing <strong style="color:var(--ink)">2,847</strong> stories</div>
+      <select style="padding:8px 14px;border-radius:100px;border:1.5px solid var(--mist-2);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);background:var(--white);outline:none;cursor:pointer">
+        <option>Most Recent</option>
+        <option>Most Liked</option>
+        <option>Trending</option>
+        <option>Budget: Low to High</option>
+      </select>
+    </div>
+
+    <div class="stories-feed">
+      <!-- Card 1 -->
+      <div class="feed-card">
+        <div class="feed-img" style="background-image:url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=600&q=80')">
+          <div class="feed-img-overlay"></div>
+          <div class="feed-img-tag">🇯🇵 Japan</div>
+        </div>
+        <div class="feed-body">
+          <div class="feed-location">📍 Tokyo, Kyoto, Osaka</div>
+          <div class="feed-title">28 Days Chasing Cherry Blossoms Across Japan</div>
+          <div class="feed-excerpt">From the neon chaos of Shinjuku to the serene temples of Kyoto, this trip changed everything I thought I knew about travel.</div>
+          <div class="feed-footer">
+            <div class="feed-author">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,var(--teal),var(--indigo))">A</div>
+              Aiko Tanaka · 14 days · $3,200
+            </div>
+            <div class="feed-actions">
+              <div class="feed-action" onclick="likeStory(this)">❤️ 482</div>
+              <div class="feed-action">💬 34</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="feed-card">
+        <div class="feed-img" style="background-image:url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&q=80')">
+          <div class="feed-img-overlay"></div>
+          <div class="feed-img-tag">🇳🇴 Norway</div>
+        </div>
+        <div class="feed-body">
+          <div class="feed-location">📍 Bergen, Geirangerfjord, Flåm</div>
+          <div class="feed-title">Fjord Chasing: A 10-Day Norwegian Road Trip</div>
+          <div class="feed-excerpt">Renting a campervan and driving through waterfalls, mountains, and villages with no plan — exactly as it should be.</div>
+          <div class="feed-footer">
+            <div class="feed-author">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,var(--coral),var(--gold))">M</div>
+              Marcus Lund · 10 days · $4,800
+            </div>
+            <div class="feed-actions">
+              <div class="feed-action" onclick="likeStory(this)">❤️ 891</div>
+              <div class="feed-action">💬 67</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="feed-card">
+        <div class="feed-img" style="background-image:url('https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=600&q=80')">
+          <div class="feed-img-overlay"></div>
+          <div class="feed-img-tag">🇮🇹 Italy</div>
+        </div>
+        <div class="feed-body">
+          <div class="feed-location">📍 Venice, Florence, Rome</div>
+          <div class="feed-title">La Dolce Vita: An Italian Love Story in 3 Cities</div>
+          <div class="feed-excerpt">Art, pasta, gelato, and crumbling beauty at every corner. Italy doesn't just visit you — it haunts you forever.</div>
+          <div class="feed-footer">
+            <div class="feed-author">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,var(--indigo),var(--teal))">S</div>
+              Sofia Romano · 12 days · $3,600
+            </div>
+            <div class="feed-actions">
+              <div class="feed-action" onclick="likeStory(this)">❤️ 623</div>
+              <div class="feed-action">💬 45</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="feed-card">
+        <div class="feed-img" style="background-image:url('https://images.unsplash.com/photo-1489493887464-892be6d1daae?w=600&q=80')">
+          <div class="feed-img-overlay"></div>
+          <div class="feed-img-tag">🇲🇦 Morocco</div>
+        </div>
+        <div class="feed-body">
+          <div class="feed-location">📍 Marrakech, Sahara, Chefchaouen</div>
+          <div class="feed-title">Morocco in 2 Weeks: Medinas, Dunes & Blue Cities</div>
+          <div class="feed-excerpt">The colors, the souks, the silence of the Sahara at midnight. Morocco is a full sensory assault — in the best way.</div>
+          <div class="feed-footer">
+            <div class="feed-author">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,var(--gold),var(--coral))">J</div>
+              James Kim · 14 days · $2,100
+            </div>
+            <div class="feed-actions">
+              <div class="feed-action" onclick="likeStory(this)">❤️ 445</div>
+              <div class="feed-action">💬 29</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Card 5 -->
+      <div class="feed-card">
+        <div class="feed-img" style="background-image:url('https://images.unsplash.com/photo-1540202404-a2f29016b523?w=600&q=80')">
+          <div class="feed-img-overlay"></div>
+          <div class="feed-img-tag">🇮🇩 Indonesia</div>
+        </div>
+        <div class="feed-body">
+          <div class="feed-location">📍 Ubud, Canggu, Nusa Penida</div>
+          <div class="feed-title">Bali on $60/Day: A Digital Nomad's Full Guide</div>
+          <div class="feed-excerpt">Co-working by day, cliff sunset sessions by evening, and the most affordable amazing food in the world. Bali delivers.</div>
+          <div class="feed-footer">
+            <div class="feed-author">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,var(--teal),var(--coral))">L</div>
+              Luna Verde · 21 days · $1,260
+            </div>
+            <div class="feed-actions">
+              <div class="feed-action" onclick="likeStory(this)">❤️ 1.2k</div>
+              <div class="feed-action">💬 112</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Card 6 -->
+      <div class="feed-card">
+        <div class="feed-img" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80')">
+          <div class="feed-img-overlay"></div>
+          <div class="feed-img-tag">🇲🇻 Maldives</div>
+        </div>
+        <div class="feed-body">
+          <div class="feed-location">📍 Malé, Baa Atoll, Rangali</div>
+          <div class="feed-title">7 Days in Paradise: Overwater Bungalows & Blue Infinity</div>
+          <div class="feed-excerpt">Worth every penny. The kind of place that ruins all other beaches forever. We're already planning to go back.</div>
+          <div class="feed-footer">
+            <div class="feed-author">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,var(--indigo),var(--coral))">P</div>
+              Priya & Dev · 7 days · $6,800
+            </div>
+            <div class="feed-actions">
+              <div class="feed-action" onclick="likeStory(this)">❤️ 738</div>
+              <div class="feed-action">💬 58</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:48px">
+      <button class="btn btn-ghost btn-lg" style="border-color:var(--mist-2)">Load More Stories</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     PAGE: TRIP PLANNER
+     ================================================================ -->
+<div class="page" id="page-planner">
+  <div class="planner-page" style="min-height:100vh">
+    <div class="planner-header">
+      <div style="display:flex;align-items:center;gap:20px">
+        <span style="cursor:pointer;font-size:20px" onclick="navigateTo('dashboard')">←</span>
+        <div class="planner-title">Japan Spring 2026</div>
+        <div class="trip-badge badge-planned">Planned</div>
+      </div>
+      <div style="display:flex;gap:12px">
+        <button class="btn btn-ghost" style="border-color:var(--mist-2)">Share</button>
+        <button class="btn btn-primary" onclick="showToast('✅','Trip saved successfully!')">Save Trip</button>
+      </div>
+    </div>
+
+    <div class="planner-body">
+      <!-- Planner sidebar -->
+      <div class="planner-sidebar">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+          <div style="font-size:15px;font-weight:600;color:var(--ink)">Itinerary</div>
+          <div style="font-size:13px;color:var(--ink-3)">14 days · 5 stops</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px">
+          <div style="background:var(--mist);padding:12px;border-radius:10px;text-align:center">
+            <div style="font-size:11px;color:var(--ink-3);margin-bottom:4px">DEPARTURE</div>
+            <div style="font-size:13px;font-weight:600">Apr 1, 2026</div>
+          </div>
+          <div style="background:var(--mist);padding:12px;border-radius:10px;text-align:center">
+            <div style="font-size:11px;color:var(--ink-3);margin-bottom:4px">RETURN</div>
+            <div style="font-size:13px;font-weight:600">Apr 14, 2026</div>
+          </div>
+        </div>
+
+        <div class="planner-steps">
+          <!-- Step 1 -->
+          <div class="planner-step">
+            <div class="step-num" style="background:var(--teal)">1</div>
+            <div class="step-content">
+              <div class="step-place">Tokyo 🇯🇵</div>
+              <div class="step-date">Apr 1–5 · 4 nights</div>
+              <div class="step-activities">
+                <div class="step-activity">🌸 Shinjuku Gyoen</div>
+                <div class="step-activity">🏯 Senso-ji Temple</div>
+                <div class="step-activity">🍣 Tsukiji Market</div>
+              </div>
+            </div>
+          </div>
+          <!-- Step 2 -->
+          <div class="planner-step">
+            <div class="step-num" style="background:var(--indigo)">2</div>
+            <div class="step-content">
+              <div class="step-place">Hakone ⛰️</div>
+              <div class="step-date">Apr 5–7 · 2 nights</div>
+              <div class="step-activities">
+                <div class="step-activity">🌋 Mt. Fuji Views</div>
+                <div class="step-activity">♨️ Onsen Ryokan</div>
+              </div>
+            </div>
+          </div>
+          <!-- Step 3 -->
+          <div class="planner-step">
+            <div class="step-num" style="background:var(--gold)">3</div>
+            <div class="step-content">
+              <div class="step-place">Kyoto 🏯</div>
+              <div class="step-date">Apr 7–10 · 3 nights</div>
+              <div class="step-activities">
+                <div class="step-activity">⛩️ Fushimi Inari</div>
+                <div class="step-activity">🎋 Arashiyama Bamboo</div>
+                <div class="step-activity">🍵 Tea Ceremony</div>
+              </div>
+            </div>
+          </div>
+          <!-- Step 4 -->
+          <div class="planner-step">
+            <div class="step-num" style="background:var(--coral)">4</div>
+            <div class="step-content">
+              <div class="step-place">Nara 🦌</div>
+              <div class="step-date">Apr 10–11 · 1 night</div>
+              <div class="step-activities">
+                <div class="step-activity">🦌 Nara Deer Park</div>
+                <div class="step-activity">🏛️ Todai-ji Temple</div>
+              </div>
+            </div>
+          </div>
+          <!-- Step 5 -->
+          <div class="planner-step">
+            <div class="step-num" style="background:var(--ink-3)">5</div>
+            <div class="step-content">
+              <div class="step-place">Osaka 🌃</div>
+              <div class="step-date">Apr 11–14 · 3 nights</div>
+              <div class="step-activities">
+                <div class="step-activity">🏰 Osaka Castle</div>
+                <div class="step-activity">🍜 Dotonbori Food Tour</div>
+                <div class="step-activity">🎡 Universal Studios</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="add-destination" onclick="showToast('📍','Add destination feature — connect your backend!')">
+          + Add Destination
+        </div>
+
+        <div style="margin-top:24px;padding:16px;background:rgba(45,143,123,0.08);border-radius:12px;border:1px solid rgba(45,143,123,0.15)">
+          <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--teal);margin-bottom:10px">Trip Budget</div>
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px">
+            <span style="color:var(--ink-3)">Flights</span>
+            <span style="font-weight:600">$1,200</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px">
+            <span style="color:var(--ink-3)">Accommodation</span>
+            <span style="font-weight:600">$1,400</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px">
+            <span style="color:var(--ink-3)">Activities</span>
+            <span style="font-weight:600">$600</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:14px">
+            <span style="color:var(--ink-3)">Food & Transport</span>
+            <span style="font-weight:600">$600</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:16px;padding-top:12px;border-top:1px solid rgba(45,143,123,0.2)">
+            <span style="font-weight:700;color:var(--ink)">Total</span>
+            <span style="font-weight:700;color:var(--teal)">$3,800</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map area -->
+      <div class="planner-map">
+        <div class="planner-map-placeholder">
+          <svg viewBox="0 0 800 600" style="width:100%;height:100%;position:absolute;inset:0">
+            <defs>
+              <radialGradient id="mg1" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#3dba9e" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#3dba9e" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="mg2" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <!-- Japan shape (approximate) -->
+            <path d="M 480 120 Q 510 100 530 130 Q 540 160 520 180 Q 500 190 480 170 Z" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <path d="M 450 180 Q 490 160 510 200 Q 520 240 490 260 Q 460 270 440 240 Q 430 210 450 180 Z" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <path d="M 420 260 Q 460 240 480 280 Q 490 320 460 340 Q 430 350 410 320 Q 400 290 420 260 Z" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+            <!-- Route path between cities -->
+            <path d="M 490 200 L 480 260 L 450 320 L 440 355 L 430 390" 
+                  stroke="#3dba9e" stroke-width="2.5" fill="none" stroke-dasharray="8,5" opacity="0.7"/>
+
+            <!-- Tokyo -->
+            <circle cx="490" cy="200" r="40" fill="url(#mg1)" opacity="0.5"/>
+            <circle cx="490" cy="200" r="14" fill="#3dba9e" opacity="0.9"/>
+            <circle cx="490" cy="200" r="6" fill="white"/>
+            <text x="508" y="196" fill="white" font-size="13" font-family="DM Sans,sans-serif" font-weight="700">Tokyo</text>
+            <text x="508" y="211" fill="rgba(255,255,255,0.5)" font-size="10" font-family="DM Sans,sans-serif">Apr 1–5</text>
+
+            <!-- Hakone -->
+            <circle cx="480" cy="260" r="30" fill="url(#mg1)" opacity="0.4"/>
+            <circle cx="480" cy="260" r="10" fill="#6b7bf7" opacity="0.9"/>
+            <circle cx="480" cy="260" r="4" fill="white"/>
+            <text x="496" y="256" fill="white" font-size="12" font-family="DM Sans,sans-serif" font-weight="700">Hakone</text>
+            <text x="496" y="270" fill="rgba(255,255,255,0.5)" font-size="10" font-family="DM Sans,sans-serif">Apr 5–7</text>
+
+            <!-- Kyoto -->
+            <circle cx="450" cy="320" r="35" fill="url(#mg2)" opacity="0.5"/>
+            <circle cx="450" cy="320" r="12" fill="#c9a84c" opacity="0.9"/>
+            <circle cx="450" cy="320" r="5" fill="white"/>
+            <text x="466" y="316" fill="white" font-size="13" font-family="DM Sans,sans-serif" font-weight="700">Kyoto</text>
+            <text x="466" y="331" fill="rgba(255,255,255,0.5)" font-size="10" font-family="DM Sans,sans-serif">Apr 7–10</text>
+
+            <!-- Nara -->
+            <circle cx="440" cy="355" r="25" fill="url(#mg1)" opacity="0.4"/>
+            <circle cx="440" cy="355" r="9" fill="#e8634a" opacity="0.9"/>
+            <circle cx="440" cy="355" r="3.5" fill="white"/>
+            <text x="453" y="351" fill="white" font-size="11" font-family="DM Sans,sans-serif" font-weight="700">Nara</text>
+            <text x="453" y="364" fill="rgba(255,255,255,0.5)" font-size="10" font-family="DM Sans,sans-serif">Apr 10–11</text>
+
+            <!-- Osaka -->
+            <circle cx="430" cy="390" r="38" fill="url(#mg1)" opacity="0.5"/>
+            <circle cx="430" cy="390" r="13" fill="#3dba9e" opacity="0.9"/>
+            <circle cx="430" cy="390" r="5" fill="white"/>
+            <text x="447" y="386" fill="white" font-size="13" font-family="DM Sans,sans-serif" font-weight="700">Osaka</text>
+            <text x="447" y="401" fill="rgba(255,255,255,0.5)" font-size="10" font-family="DM Sans,sans-serif">Apr 11–14</text>
+          </svg>
+        </div>
+
+        <div style="position:absolute;top:20px;left:20px;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius);padding:14px 18px;color:white">
+          <div style="font-size:11px;opacity:0.6;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Japan Spring 2026</div>
+          <div style="font-size:15px;font-weight:600">5 Cities · 14 Days</div>
+          <div style="font-size:12px;opacity:0.6;margin-top:4px">~2,400 km total distance</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     PAGE: MAP
+     ================================================================ -->
+<div class="page" id="page-map-page">
+  <div class="map-page" style="height:100vh">
+    <div class="map-sidebar">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+        <span style="cursor:pointer;font-size:18px" onclick="navigateTo('dashboard')">←</span>
+        <div style="font-size:16px;font-weight:600">Route Maps</div>
+      </div>
+
+      <div style="margin-bottom:20px">
+        <input type="text" class="form-input" placeholder="Search trips..." style="font-size:13px;padding:10px 14px">
+      </div>
+
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--ink-3);margin-bottom:12px">My Routes</div>
+
+      <!-- Trip 1 - Active -->
+      <div class="route-stop" style="margin-bottom:16px;background:rgba(45,143,123,0.08);padding:12px;border-radius:12px;border:1px solid rgba(45,143,123,0.15)">
+        <div style="flex-shrink:0">
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--teal);margin-top:2px"></div>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--ink)">Japan Spring 2026</div>
+          <div style="font-size:12px;color:var(--ink-3);margin-top:2px">5 stops · 2,400 km · Apr 1–14</div>
+          <div style="font-size:11px;color:var(--teal);margin-top:4px;font-weight:600">● Viewing now</div>
+        </div>
+      </div>
+
+      <div class="route-stop" style="margin-bottom:16px;padding:12px;border-radius:12px;border:1px solid var(--mist-2);cursor:pointer">
+        <div style="flex-shrink:0">
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--ink-3);margin-top:2px"></div>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--ink)">Norway Fjords 2025</div>
+          <div style="font-size:12px;color:var(--ink-3);margin-top:2px">6 stops · 3,200 km · Sep 2025</div>
+        </div>
+      </div>
+
+      <div class="route-stop" style="margin-bottom:28px;padding:12px;border-radius:12px;border:1px solid var(--mist-2);cursor:pointer">
+        <div style="flex-shrink:0">
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--ink-3);margin-top:2px"></div>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--ink)">Bali Escape 2025</div>
+          <div style="font-size:12px;color:var(--ink-3);margin-top:2px">4 stops · 580 km · Jul 2025</div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--ink-3);margin-bottom:12px">Japan Route Stops</div>
+
+      <div class="route-stop">
+        <div class="stop-dot" style="background:var(--teal)">1</div>
+        <div>
+          <div class="stop-name">Tokyo</div>
+          <div class="stop-date">Apr 1–5 · 4 nights</div>
+        </div>
+      </div>
+      <div class="route-stop">
+        <div class="stop-dot" style="background:var(--indigo)">2</div>
+        <div>
+          <div class="stop-name">Hakone</div>
+          <div class="stop-date">Apr 5–7 · 2 nights</div>
+        </div>
+      </div>
+      <div class="route-stop">
+        <div class="stop-dot" style="background:var(--gold)">3</div>
+        <div>
+          <div class="stop-name">Kyoto</div>
+          <div class="stop-date">Apr 7–10 · 3 nights</div>
+        </div>
+      </div>
+      <div class="route-stop">
+        <div class="stop-dot" style="background:var(--coral)">4</div>
+        <div>
+          <div class="stop-name">Nara</div>
+          <div class="stop-date">Apr 10–11 · 1 night</div>
+        </div>
+      </div>
+      <div class="route-stop">
+        <div class="stop-dot" style="background:var(--ink-3)">5</div>
+        <div>
+          <div class="stop-name">Osaka</div>
+          <div class="stop-date">Apr 11–14 · 3 nights</div>
+        </div>
+      </div>
+
+      <button class="btn btn-teal" style="width:100%;justify-content:center;margin-top:20px;border-radius:10px" onclick="navigateTo('planner')">
+        Edit Itinerary →
+      </button>
+    </div>
+
+    <div class="map-full">
+      <svg viewBox="0 0 1000 700" style="width:100%;height:100%;position:absolute;inset:0">
+        <defs>
+          <radialGradient id="r1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#3dba9e" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#3dba9e" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="r2" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="r3" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#6b7bf7" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#6b7bf7" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <!-- Background dots suggesting land -->
+        <g opacity="0.1" fill="#8aa8c8">
+          <!-- Simplified continent dots - rows of dots to suggest land masses -->
+          <circle cx="120" cy="200" r="1.5"/><circle cx="140" cy="195" r="1.5"/><circle cx="160" cy="190" r="1.5"/><circle cx="180" cy="188" r="1.5"/><circle cx="200" cy="186" r="1.5"/><circle cx="220" cy="190" r="1.5"/><circle cx="240" cy="195" r="1.5"/>
+          <circle cx="120" cy="220" r="1.5"/><circle cx="140" cy="215" r="1.5"/><circle cx="160" cy="210" r="1.5"/><circle cx="180" cy="208" r="1.5"/><circle cx="200" cy="206" r="1.5"/><circle cx="220" cy="210" r="1.5"/><circle cx="240" cy="215" r="1.5"/><circle cx="260" cy="218" r="1.5"/>
+          <circle cx="120" cy="240" r="1.5"/><circle cx="140" cy="235" r="1.5"/><circle cx="160" cy="230" r="1.5"/><circle cx="180" cy="228" r="1.5"/>
+          <!-- Europe/Asia -->
+          <circle cx="340" cy="180" r="1.5"/><circle cx="360" cy="175" r="1.5"/><circle cx="380" cy="172" r="1.5"/><circle cx="400" cy="170" r="1.5"/><circle cx="420" cy="172" r="1.5"/><circle cx="440" cy="175" r="1.5"/><circle cx="460" cy="178" r="1.5"/><circle cx="480" cy="182" r="1.5"/><circle cx="500" cy="185" r="1.5"/><circle cx="520" cy="188" r="1.5"/><circle cx="540" cy="190" r="1.5"/><circle cx="560" cy="195" r="1.5"/><circle cx="580" cy="192" r="1.5"/>
+          <circle cx="340" cy="200" r="1.5"/><circle cx="360" cy="195" r="1.5"/><circle cx="380" cy="192" r="1.5"/><circle cx="400" cy="190" r="1.5"/><circle cx="420" cy="192" r="1.5"/><circle cx="440" cy="195" r="1.5"/><circle cx="460" cy="198" r="1.5"/><circle cx="480" cy="202" r="1.5"/><circle cx="500" cy="205" r="1.5"/>
+          <!-- Japan dots -->
+          <circle cx="640" cy="200" r="1.5"/><circle cx="655" cy="195" r="1.5"/><circle cx="670" cy="192" r="1.5"/><circle cx="680" cy="198" r="1.5"/>
+          <circle cx="635" cy="220" r="1.5"/><circle cx="650" cy="215" r="1.5"/><circle cx="665" cy="212" r="1.5"/><circle cx="678" cy="218" r="1.5"/><circle cx="688" cy="225" r="1.5"/>
+          <circle cx="630" cy="240" r="1.5"/><circle cx="645" cy="235" r="1.5"/><circle cx="660" cy="232" r="1.5"/><circle cx="675" cy="238" r="1.5"/><circle cx="685" cy="245" r="1.5"/>
+          <circle cx="625" cy="260" r="1.5"/><circle cx="640" cy="255" r="1.5"/><circle cx="655" cy="252" r="1.5"/><circle cx="670" cy="258" r="1.5"/><circle cx="680" cy="265" r="1.5"/>
+          <circle cx="618" cy="280" r="1.5"/><circle cx="633" cy="275" r="1.5"/><circle cx="648" cy="272" r="1.5"/><circle cx="663" cy="278" r="1.5"/>
+          <!-- Africa -->
+          <circle cx="360" cy="300" r="1.5"/><circle cx="380" cy="295" r="1.5"/><circle cx="400" cy="292" r="1.5"/><circle cx="420" cy="295" r="1.5"/><circle cx="440" cy="300" r="1.5"/>
+          <circle cx="370" cy="320" r="1.5"/><circle cx="390" cy="315" r="1.5"/><circle cx="410" cy="312" r="1.5"/><circle cx="430" cy="315" r="1.5"/>
+          <circle cx="380" cy="340" r="1.5"/><circle cx="400" cy="335" r="1.5"/><circle cx="420" cy="338" r="1.5"/>
+          <circle cx="390" cy="360" r="1.5"/><circle cx="408" cy="358" r="1.5"/>
+          <!-- Americas -->
+          <circle cx="100" cy="280" r="1.5"/><circle cx="120" cy="275" r="1.5"/><circle cx="140" cy="272" r="1.5"/><circle cx="160" cy="275" r="1.5"/><circle cx="180" cy="280" r="1.5"/>
+          <circle cx="110" cy="300" r="1.5"/><circle cx="130" cy="295" r="1.5"/><circle cx="150" cy="292" r="1.5"/>
+          <circle cx="150" cy="360" r="1.5"/><circle cx="165" cy="355" r="1.5"/><circle cx="180" cy="360" r="1.5"/>
+          <circle cx="155" cy="400" r="1.5"/><circle cx="168" cy="395" r="1.5"/><circle cx="180" cy="400" r="1.5"/>
+          <!-- Australia -->
+          <circle cx="720" cy="380" r="1.5"/><circle cx="740" cy="375" r="1.5"/><circle cx="760" cy="372" r="1.5"/><circle cx="780" cy="375" r="1.5"/><circle cx="800" cy="380" r="1.5"/>
+          <circle cx="725" cy="400" r="1.5"/><circle cx="745" cy="395" r="1.5"/><circle cx="765" cy="392" r="1.5"/><circle cx="785" cy="395" r="1.5"/>
+          <circle cx="730" cy="420" r="1.5"/><circle cx="750" cy="415" r="1.5"/><circle cx="768" cy="418" r="1.5"/>
+        </g>
+
+        <!-- Route: London → Dubai → Tokyo with animated path -->
+        <path d="M 390 198 Q 450 170 500 210 Q 560 240 650 235" 
+              stroke="#3dba9e" stroke-width="2" fill="none" 
+              stroke-dasharray="10,6" opacity="0.6"/>
+
+        <!-- City markers - London -->
+        <circle cx="390" cy="198" r="32" fill="url(#r3)" opacity="0.5"/>
+        <circle cx="390" cy="198" r="11" fill="#6b7bf7" opacity="0.9"/>
+        <circle cx="390" cy="198" r="5" fill="white"/>
+        <text x="406" y="194" fill="white" font-size="12" font-family="DM Sans,sans-serif" font-weight="700">London</text>
+
+        <!-- Dubai -->
+        <circle cx="500" cy="210" r="28" fill="url(#r2)" opacity="0.5"/>
+        <circle cx="500" cy="210" r="10" fill="#c9a84c" opacity="0.9"/>
+        <circle cx="500" cy="210" r="4" fill="white"/>
+        <text x="514" y="206" fill="white" font-size="12" font-family="DM Sans,sans-serif" font-weight="700">Dubai</text>
+
+        <!-- Japan cluster (Tokyo as main) -->
+        <circle cx="650" cy="235" r="40" fill="url(#r1)" opacity="0.6"/>
+        <circle cx="650" cy="235" r="14" fill="#3dba9e" opacity="0.9"/>
+        <circle cx="650" cy="235" r="6" fill="white"/>
+        <text x="668" y="231" fill="white" font-size="13" font-family="DM Sans,sans-serif" font-weight="700">Tokyo</text>
+        <text x="668" y="246" fill="rgba(255,255,255,0.5)" font-size="10" font-family="DM Sans,sans-serif">Current Route</text>
+
+        <!-- Inset Japan route path -->
+        <path d="M 650 235 L 645 265 L 635 295 L 628 318 L 620 345" 
+              stroke="#c9a84c" stroke-width="1.5" fill="none" 
+              stroke-dasharray="6,4" opacity="0.5"/>
+        <circle cx="645" cy="265" r="6" fill="#6b7bf7" opacity="0.7"/>
+        <circle cx="635" cy="295" r="7" fill="#c9a84c" opacity="0.7"/>
+        <circle cx="628" cy="318" r="5" fill="#e8634a" opacity="0.7"/>
+        <circle cx="620" cy="345" r="6" fill="#3dba9e" opacity="0.7"/>
+
+        <!-- Legend labels -->
+        <text x="653" y="261" fill="rgba(255,255,255,0.6)" font-size="10" font-family="DM Sans,sans-serif">Hakone</text>
+        <text x="638" y="291" fill="rgba(255,255,255,0.6)" font-size="10" font-family="DM Sans,sans-serif">Kyoto</text>
+        <text x="631" y="314" fill="rgba(255,255,255,0.6)" font-size="10" font-family="DM Sans,sans-serif">Nara</text>
+        <text x="623" y="341" fill="rgba(255,255,255,0.6)" font-size="10" font-family="DM Sans,sans-serif">Osaka</text>
+
+        <!-- Distance label -->
+        <text x="435" y="185" fill="#3dba9e" font-size="10" opacity="0.7" font-family="DM Sans,sans-serif">18,940 km</text>
+      </svg>
+
+      <!-- Legend overlay -->
+      <div class="route-legend">
+        <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--ink-3);margin-bottom:12px">Japan Spring 2026</div>
+        <div class="route-stop">
+          <div class="stop-dot" style="background:var(--teal);width:24px;height:24px;font-size:10px">1</div>
+          <div><div class="stop-name">Tokyo</div><div class="stop-date">Apr 1–5</div></div>
+        </div>
+        <div class="route-stop">
+          <div class="stop-dot" style="background:var(--indigo);width:24px;height:24px;font-size:10px">2</div>
+          <div><div class="stop-name">Hakone</div><div class="stop-date">Apr 5–7</div></div>
+        </div>
+        <div class="route-stop">
+          <div class="stop-dot" style="background:var(--gold);width:24px;height:24px;font-size:10px">3</div>
+          <div><div class="stop-name">Kyoto</div><div class="stop-date">Apr 7–10</div></div>
+        </div>
+        <div class="route-stop">
+          <div class="stop-dot" style="background:var(--coral);width:24px;height:24px;font-size:10px">4</div>
+          <div><div class="stop-name">Nara</div><div class="stop-date">Apr 10–11</div></div>
+        </div>
+        <div class="route-stop">
+          <div class="stop-dot" style="background:var(--ink-3);width:24px;height:24px;font-size:10px">5</div>
+          <div><div class="stop-name">Osaka</div><div class="stop-date">Apr 11–14</div></div>
+        </div>
+      </div>
+
+      <!-- Map controls -->
+      <div class="map-controls">
+        <button class="map-ctrl-btn">+</button>
+        <button class="map-ctrl-btn" style="font-size:18px">−</button>
+        <button class="map-ctrl-btn" style="font-size:14px">⊕</button>
+      </div>
+
+      <div style="position:absolute;bottom:24px;left:24px;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.15);padding:12px 18px;border-radius:10px;color:white;font-size:13px">
+        🛣️ Total: 2,400 km · 14 days · ¥428,000 budget
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     PAGE: BUDGET
+     ================================================================ -->
+<div class="page" id="page-budget">
+  <div style="background:var(--white);padding:20px 40px;border-bottom:1px solid var(--mist-2);display:flex;justify-content:space-between;align-items:center">
+    <div style="display:flex;align-items:center;gap:16px">
+      <span style="cursor:pointer;font-size:20px" onclick="navigateTo('dashboard')">←</span>
+      <div style="font-family:'Fraunces',serif;font-size:22px;font-weight:700;letter-spacing:-0.5px">Budget Tracker</div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:center">
+      <select style="padding:8px 14px;border-radius:100px;border:1.5px solid var(--mist-2);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;cursor:pointer">
+        <option>Japan Spring 2026</option>
+        <option>Norway Fjords 2025</option>
+        <option>Bali Escape 2025</option>
+      </select>
+      <button class="btn btn-primary" onclick="showToast('💰','Expense added!')">+ Add Expense</button>
+    </div>
+  </div>
+
+  <div class="budget-page">
+    <div class="budget-inner">
+
+      <!-- Total card -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+        <div class="budget-total-card" style="grid-column:1">
+          <div class="budget-total-blob"></div>
+          <div>
+            <div class="budget-total-label">Total Spent</div>
+            <div class="budget-total-num">$2,340</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:8px">of $3,800 budget</div>
+            <div class="budget-progress-bar" style="width:220px;margin-top:12px">
+              <div class="budget-progress-fill" style="width:61%"></div>
+            </div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:8px">61% used · $1,460 remaining</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div style="background:var(--white);border-radius:var(--radius);padding:20px;border:1px solid var(--mist-2);box-shadow:var(--shadow-sm)">
+            <div style="font-size:24px;margin-bottom:8px">📅</div>
+            <div style="font-size:22px;font-family:'Fraunces',serif;font-weight:700;color:var(--ink)">Day 8</div>
+            <div style="font-size:12px;color:var(--ink-3);margin-top:4px">of 14 days</div>
+          </div>
+          <div style="background:var(--white);border-radius:var(--radius);padding:20px;border:1px solid var(--mist-2);box-shadow:var(--shadow-sm)">
+            <div style="font-size:24px;margin-bottom:8px">💵</div>
+            <div style="font-size:22px;font-family:'Fraunces',serif;font-weight:700;color:var(--teal)">$167</div>
+            <div style="font-size:12px;color:var(--ink-3);margin-top:4px">avg per day</div>
+          </div>
+          <div style="background:var(--white);border-radius:var(--radius);padding:20px;border:1px solid var(--mist-2);box-shadow:var(--shadow-sm)">
+            <div style="font-size:24px;margin-bottom:8px">📍</div>
+            <div style="font-size:22px;font-family:'Fraunces',serif;font-weight:700;color:var(--ink)">5</div>
+            <div style="font-size:12px;color:var(--ink-3);margin-top:4px">cities visited</div>
+          </div>
+          <div style="background:var(--white);border-radius:var(--radius);padding:20px;border:1px solid var(--mist-2);box-shadow:var(--shadow-sm)">
+            <div style="font-size:24px;margin-bottom:8px">🏦</div>
+            <div style="font-size:22px;font-family:'Fraunces',serif;font-weight:700;color:var(--gold)">JPY</div>
+            <div style="font-size:12px;color:var(--ink-3);margin-top:4px">primary currency</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category breakdown -->
+      <div class="expense-grid">
+        <div class="expense-cat-card">
+          <div class="expense-cat-emoji">🏨</div>
+          <div class="expense-cat-name">Accommodation</div>
+          <div class="expense-cat-amt">$980</div>
+          <div class="expense-cat-pct">42% of budget</div>
+        </div>
+        <div class="expense-cat-card">
+          <div class="expense-cat-emoji">✈️</div>
+          <div class="expense-cat-name">Transport</div>
+          <div class="expense-cat-amt">$620</div>
+          <div class="expense-cat-pct">26% of budget</div>
+        </div>
+        <div class="expense-cat-card">
+          <div class="expense-cat-emoji">🍜</div>
+          <div class="expense-cat-name">Food & Drink</div>
+          <div class="expense-cat-amt">$480</div>
+          <div class="expense-cat-pct">20% of budget</div>
+        </div>
+        <div class="expense-cat-card">
+          <div class="expense-cat-emoji">🎭</div>
+          <div class="expense-cat-name">Activities</div>
+          <div class="expense-cat-amt">$180</div>
+          <div class="expense-cat-pct">8% of budget</div>
+        </div>
+        <div class="expense-cat-card">
+          <div class="expense-cat-emoji">🛍️</div>
+          <div class="expense-cat-name">Shopping</div>
+          <div class="expense-cat-amt">$80</div>
+          <div class="expense-cat-pct">3% of budget</div>
+        </div>
+        <div class="expense-cat-card">
+          <div class="expense-cat-emoji">💊</div>
+          <div class="expense-cat-name">Health</div>
+          <div class="expense-cat-amt">$0</div>
+          <div class="expense-cat-pct">0% of budget</div>
+        </div>
+        <div class="expense-cat-card">
+          <div class="expense-cat-emoji">📡</div>
+          <div class="expense-cat-name">Communications</div>
+          <div class="expense-cat-amt">$20</div>
+          <div class="expense-cat-pct">1% of budget</div>
+        </div>
+        <div class="expense-cat-card" style="background:var(--mist);border-style:dashed;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center" onclick="showToast('➕','Add custom category!')">
+          <div style="font-size:28px;margin-bottom:8px">+</div>
+          <div style="font-size:12px;color:var(--ink-3);font-weight:500">Add Category</div>
+        </div>
+      </div>
+
+      <!-- Charts row -->
+      <div class="budget-charts-row">
+        <!-- Donut chart -->
+        <div class="chart-box">
+          <div class="chart-title">Spending Breakdown</div>
+          <div class="donut-wrap">
+            <div class="donut">
+              <svg class="donut-svg" viewBox="0 0 100 100">
+                <!-- Donut segments via stroke-dasharray on circle r=35 circumference=219.9 -->
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#f0ede8" stroke-width="20"/>
+                <!-- Accommodation 42% = 92.4 -->
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#3dba9e" stroke-width="20"
+                  stroke-dasharray="92.4 127.5" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+                <!-- Transport 26% = 57.2 -->
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#6b7bf7" stroke-width="20"
+                  stroke-dasharray="57.2 162.7" stroke-dashoffset="-92.4" transform="rotate(-90 50 50)"/>
+                <!-- Food 20% = 44 -->
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#c9a84c" stroke-width="20"
+                  stroke-dasharray="44 175.9" stroke-dashoffset="-149.6" transform="rotate(-90 50 50)"/>
+                <!-- Activities 8% = 17.6 -->
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#e8634a" stroke-width="20"
+                  stroke-dasharray="17.6 202.3" stroke-dashoffset="-193.6" transform="rotate(-90 50 50)"/>
+                <!-- Rest 4% = 8.8 -->
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#d4b896" stroke-width="20"
+                  stroke-dasharray="8.8 211.1" stroke-dashoffset="-211.2" transform="rotate(-90 50 50)"/>
+                <text x="50" y="46" text-anchor="middle" fill="#0a0a0f" font-size="14" font-weight="700" font-family="Fraunces,serif">$2.3k</text>
+                <text x="50" y="58" text-anchor="middle" fill="#2e2e42" font-size="6" font-family="DM Sans,sans-serif">total spent</text>
+              </svg>
+            </div>
+            <div style="flex:1">
+              <div class="legend-item">
+                <div class="legend-dot" style="background:var(--teal)"></div>
+                <div class="legend-text">Accommodation</div>
+                <div class="legend-pct">42%</div>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background:var(--indigo-light)"></div>
+                <div class="legend-text">Transport</div>
+                <div class="legend-pct">26%</div>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background:var(--gold)"></div>
+                <div class="legend-text">Food & Drink</div>
+                <div class="legend-pct">20%</div>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background:var(--coral)"></div>
+                <div class="legend-text">Activities</div>
+                <div class="legend-pct">8%</div>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background:var(--sand)"></div>
+                <div class="legend-text">Other</div>
+                <div class="legend-pct">4%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bar chart -->
+        <div class="chart-box">
+          <div class="chart-title">Daily Spending</div>
+          <div class="bar-chart">
+            <div class="bar-col">
+              <div class="bar-fill" style="height:65%;background:var(--teal);opacity:0.8" data-val="$320"></div>
+              <div class="bar-label">Apr 1</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:40%;background:var(--teal);opacity:0.8" data-val="$195"></div>
+              <div class="bar-label">Apr 2</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:35%;background:var(--teal);opacity:0.8" data-val="$170"></div>
+              <div class="bar-label">Apr 3</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:50%;background:var(--teal);opacity:0.8" data-val="$245"></div>
+              <div class="bar-label">Apr 4</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:80%;background:var(--gold);opacity:0.9" data-val="$390"></div>
+              <div class="bar-label">Apr 5</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:30%;background:var(--teal);opacity:0.8" data-val="$145"></div>
+              <div class="bar-label">Apr 6</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:45%;background:var(--teal);opacity:0.8" data-val="$220"></div>
+              <div class="bar-label">Apr 7</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:100%;background:var(--coral);opacity:0.9" data-val="$490"></div>
+              <div class="bar-label">Apr 8</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;margin-top:16px;font-size:12px">
+            <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:3px;background:var(--teal)"></div> Normal day</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:3px;background:var(--gold)"></div> Over average</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:3px;background:var(--coral)"></div> Highest day</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Expense list -->
+      <div class="expense-list">
+        <div class="expense-list-header">
+          <div style="font-size:15px;font-weight:600">Recent Expenses</div>
+          <div style="font-size:13px;color:var(--ink-3)">8 transactions today</div>
+        </div>
+        <div class="expense-row">
+          <div class="expense-icon">🏨</div>
+          <div>
+            <div class="expense-name">Park Hyatt Tokyo</div>
+            <div class="expense-desc">4 nights · Apr 1–5</div>
+          </div>
+          <div class="expense-date">Apr 1</div>
+          <div class="expense-amount" style="color:var(--coral)">-$780</div>
+        </div>
+        <div class="expense-row">
+          <div class="expense-icon">✈️</div>
+          <div>
+            <div class="expense-name">Shinkansen Pass</div>
+            <div class="expense-desc">14-day JR Pass · All cities</div>
+          </div>
+          <div class="expense-date">Apr 1</div>
+          <div class="expense-amount" style="color:var(--coral)">-$440</div>
+        </div>
+        <div class="expense-row">
+          <div class="expense-icon">🍜</div>
+          <div>
+            <div class="expense-name">Sukiyabashi Jiro</div>
+            <div class="expense-desc">Omakase dinner · 2 pax</div>
+          </div>
+          <div class="expense-date">Apr 2</div>
+          <div class="expense-amount" style="color:var(--coral)">-$240</div>
+        </div>
+        <div class="expense-row">
+          <div class="expense-icon">🎭</div>
+          <div>
+            <div class="expense-name">TeamLab Planets</div>
+            <div class="expense-desc">Museum · 2 tickets</div>
+          </div>
+          <div class="expense-date">Apr 3</div>
+          <div class="expense-amount" style="color:var(--coral)">-$68</div>
+        </div>
+        <div class="expense-row">
+          <div class="expense-icon">🛍️</div>
+          <div>
+            <div class="expense-name">Harajuku Shopping</div>
+            <div class="expense-desc">Souvenirs & streetwear</div>
+          </div>
+          <div class="expense-date">Apr 4</div>
+          <div class="expense-amount" style="color:var(--coral)">-$80</div>
+        </div>
+        <div class="expense-row">
+          <div class="expense-icon">🏨</div>
+          <div>
+            <div class="expense-name">Hakone Ryokan</div>
+            <div class="expense-desc">2 nights · Traditional inn</div>
+          </div>
+          <div class="expense-date">Apr 5</div>
+          <div class="expense-amount" style="color:var(--coral)">-$320</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     PAGE: PROFILE
+     ================================================================ -->
+<div class="page" id="page-profile">
+  <div class="profile-header-bg">
+    <div class="profile-header-img"></div>
+  </div>
+
+  <div class="profile-main">
+    <div class="profile-top">
+      <div class="profile-avatar-lg">A</div>
+      <div class="profile-info">
+        <div class="profile-name">Alex Journey</div>
+        <div class="profile-handle">@alexjourney · Joined Jan 2023</div>
+      </div>
+      <div class="profile-actions">
+        <button class="btn btn-ghost" style="border-color:var(--mist-2)" onclick="showToast('⚙️','Settings coming soon!')">Edit Profile</button>
+        <button class="btn btn-primary" onclick="navigateTo('planner')">+ New Trip</button>
+      </div>
+    </div>
+
+    <div class="profile-stats-row">
+      <div>
+        <div class="profile-stat-num">23</div>
+        <div class="profile-stat-label">Trips</div>
+      </div>
+      <div>
+        <div class="profile-stat-num">18</div>
+        <div class="profile-stat-label">Stories</div>
+      </div>
+      <div>
+        <div class="profile-stat-num">31</div>
+        <div class="profile-stat-label">Countries</div>
+      </div>
+      <div>
+        <div class="profile-stat-num">1.2k</div>
+        <div class="profile-stat-label">Followers</div>
+      </div>
+      <div>
+        <div class="profile-stat-num">348</div>
+        <div class="profile-stat-label">Following</div>
+      </div>
+      <div>
+        <div class="profile-stat-num">4.8k</div>
+        <div class="profile-stat-label">Likes received</div>
+      </div>
+    </div>
+
+    <p class="profile-bio">
+      Digital nomad & travel storyteller. Chasing sunsets, street food, and stories worth telling. Currently based in Lisbon 🇵🇹 · Next: Japan 🇯🇵
+    </p>
+
+    <div style="display:flex;gap:16px;margin-bottom:32px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-3)">📍 Lisbon, Portugal</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-3)">🔗 alexjourney.com</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-3)">📸 @alex.journey on Instagram</div>
+    </div>
+
+    <div class="profile-tabs">
+      <div class="profile-tab active">Trips</div>
+      <div class="profile-tab">Stories</div>
+      <div class="profile-tab">Routes</div>
+      <div class="profile-tab">Saved</div>
+      <div class="profile-tab">Stats</div>
+    </div>
+
+    <div class="profile-trips-grid">
+      <div class="profile-trip-card">
+        <div class="profile-trip-img" style="background-image:url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=600&q=80')"></div>
+        <div class="profile-trip-overlay">
+          <div><div class="profile-trip-name">Japan Spring 2026</div><div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px">Apr 1–14 · 5 stops</div></div>
+        </div>
+      </div>
+      <div class="profile-trip-card">
+        <div class="profile-trip-img" style="background-image:url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&q=80')"></div>
+        <div class="profile-trip-overlay">
+          <div><div class="profile-trip-name">Norway Fjords 2025</div><div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px">Sep 2025 · 6 stops</div></div>
+        </div>
+      </div>
+      <div class="profile-trip-card">
+        <div class="profile-trip-img" style="background-image:url('https://images.unsplash.com/photo-1540202404-a2f29016b523?w=600&q=80')"></div>
+        <div class="profile-trip-overlay">
+          <div><div class="profile-trip-name">Bali Escape 2025</div><div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px">Jul 2025 · 4 stops</div></div>
+        </div>
+      </div>
+      <div class="profile-trip-card">
+        <div class="profile-trip-img" style="background-image:url('https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=600&q=80')"></div>
+        <div class="profile-trip-overlay">
+          <div><div class="profile-trip-name">Italy Road Trip</div><div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px">May 2025 · 8 stops</div></div>
+        </div>
+      </div>
+      <div class="profile-trip-card">
+        <div class="profile-trip-img" style="background-image:url('https://images.unsplash.com/photo-1489493887464-892be6d1daae?w=600&q=80')"></div>
+        <div class="profile-trip-overlay">
+          <div><div class="profile-trip-name">Morocco Desert</div><div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px">Mar 2025 · 4 stops</div></div>
+        </div>
+      </div>
+      <div class="profile-trip-card" style="background:var(--mist);display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="navigateTo('planner')">
+        <div style="text-align:center;color:var(--ink-3)">
+          <div style="font-size:36px;margin-bottom:8px">+</div>
+          <div style="font-size:14px;font-weight:500">New Trip</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:60px"></div>
+  </div>
+</div>
+
+<!-- ================================================================
+     JAVASCRIPT
+     ================================================================ -->
+<script>
+// Navigation system
+let currentPage = 'home';
+
+function navigateTo(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + page);
+  if (target) {
+    target.classList.add('active');
+    currentPage = page;
+    window.scrollTo(0, 0);
+    updateNav(page);
+    
+    // Trigger scroll reveal for new page
+    setTimeout(() => observeReveal(), 100);
+  }
+}
+
+function updateNav(page) {
+  const nav = document.getElementById('navbar');
+  const isDark = ['home'].includes(page);
+  // Nav adjusts based on scroll position and page
+  nav.style.background = isDark ? 'transparent' : 'rgba(250,248,244,0.95)';
+  if (!isDark) {
+    nav.style.backdropFilter = 'blur(20px)';
+    nav.style.borderBottom = '1px solid rgba(10,10,15,0.06)';
+    nav.style.boxShadow = '0 2px 12px rgba(10,10,15,0.08)';
+  } else {
+    nav.style.backdropFilter = '';
+    nav.style.borderBottom = '';
+    nav.style.boxShadow = '';
+  }
+}
+
+// Scroll handler for navbar
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  if (currentPage === 'home') {
+    if (window.scrollY > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }
+});
+
+// Toast notification
+function showToast(icon, msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-icon').textContent = icon;
+  document.getElementById('toast-msg').textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// Auth handlers
+function handleLogin() {
+  const btn = document.querySelector('#page-login .form-btn');
+  const email = document.getElementById('login-email').value;
+  
+  btn.innerHTML = '<span style="display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.6s linear infinite"></span> Signing in...';
+  btn.disabled = true;
+  
+  const style = document.createElement('style');
+  style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+  document.head.appendChild(style);
+  
+  setTimeout(() => {
+    btn.innerHTML = '✓ Welcome back!';
+    btn.style.background = 'var(--teal)';
+    setTimeout(() => {
+      navigateTo('dashboard');
+      showToast('🎉', 'Welcome back, Alex!');
+      btn.innerHTML = 'Sign In';
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 800);
+  }, 1400);
+}
+
+function handleSignup() {
+  const btn = document.querySelector('#page-signup .form-btn');
+  btn.innerHTML = '<span style="display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.6s linear infinite"></span> Creating account...';
+  btn.disabled = true;
+  
+  setTimeout(() => {
+    btn.innerHTML = '✓ Account created!';
+    btn.style.background = 'var(--teal)';
+    setTimeout(() => {
+      navigateTo('dashboard');
+      showToast('🚀', 'Welcome to TripStory! Your journey begins.');
+      btn.innerHTML = 'Create Free Account 🚀';
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 800);
+  }, 1600);
+}
+
+// Like story
+function likeStory(el) {
+  const text = el.textContent;
+  const count = parseInt(text.replace(/[^\d]/g, ''));
+  el.textContent = '❤️ ' + (count + 1);
+  el.style.color = 'var(--coral)';
+  el.style.transform = 'scale(1.2)';
+  setTimeout(() => el.style.transform = 'scale(1)', 200);
+  showToast('❤️', 'Added to your liked stories!');
+}
+
+// Scroll reveal
+function observeReveal() {
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  
+  reveals.forEach(el => {
+    if (!el.classList.contains('visible')) {
+      observer.observe(el);
+    }
+  });
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  observeReveal();
+  updateNav('home');
+  
+  // Filter chips
+  document.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+    });
+  });
+
+  // Profile tabs
+  document.querySelectorAll('.profile-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Sidebar items
+  document.querySelectorAll('.sidebar-item').forEach(item => {
+    item.addEventListener('click', function() {
+      document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+});
+</script>
+</body>
+</html>
