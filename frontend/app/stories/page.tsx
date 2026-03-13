@@ -3,17 +3,11 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useStories } from "@/hooks/useQueries";
 import { FeedCard, StoryCardSkeleton } from "@/components/StoryCard";
+import { ALL_INDIA_PLACES } from "@/data";
 
-const TAGS = ["All", "North India", "South India", "Heritage", "Nature", "Adventure", "Spiritual"];
+const TAGS = ["All", "North India", "South India", "Heritage", "Nature", "Adventure", "Spiritual", "Wildlife", "Beaches", "Mountains", "Pilgrimage"];
 
-const MOCK_STORIES = [
-  { id: "1", title: "Sunrise at the Taj Mahal & Agra Fort", location: "Agra, Uttar Pradesh", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=600&q=80", author: "Rahul M.", duration: "3 days · ₹15,000", tag: "North India", likes: 1482, comments: 134, excerpt: "Witnessing the marble monument at dawn is an experience that transcends time." },
-  { id: "2", title: "Cruising the Backwaters in a Houseboat", location: "Alleppey, Kerala", image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80", author: "Sneha P.", duration: "4 days · ₹22,000", tag: "South India", likes: 891, comments: 67, excerpt: "Gliding through tranquil palm-fringed canals, eating fresh catch, pure bliss." },
-  { id: "3", title: "The Royal Palaces of the Pink City", location: "Jaipur, Rajasthan", image: "https://images.unsplash.com/photo-1477587635293-85f0ef3dbe26?w=600&q=80", author: "Karan S.", duration: "5 days · ₹18,000", tag: "North India", likes: 1623, comments: 145, excerpt: "Amber Fort, Hawa Mahal, and endless cups of cutting chai in the bazaars." },
-  { id: "4", title: "Ancient Ruins and Boulder Landscapes", location: "Hampi, Karnataka", image: "https://images.unsplash.com/photo-1620766165457-a80fe59217ca?w=600&q=80", author: "James K.", duration: "4 days · ₹12,000", tag: "South India", likes: 1445, comments: 129, excerpt: "Cycling through the Vijayanagara ruins feels like discovering a lost civilization." },
-  { id: "5", title: "Spiritual Awakening on the Ghats", location: "Varanasi, Uttar Pradesh", image: "https://images.unsplash.com/photo-1561359313-0639aad3ca84?w=600&q=80", author: "Luna V.", duration: "3 days · ₹10,000", tag: "North India", likes: 1200, comments: 112, excerpt: "The Ganga Aarti at dusk and the boat rides at dawn... absolutely magical." },
-  { id: "6", title: "Tea Gardens and Misty Mountains", location: "Munnar, Kerala", image: "https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=600&q=80", author: "Dev P.", duration: "5 days · ₹25,000", tag: "South India", likes: 1738, comments: 158, excerpt: "Waking up to endless rolling hills of green tea plantations above the clouds." },
-];
+const MOCK_STORIES = ALL_INDIA_PLACES;
 
 export default function StoriesPage() {
   const [activeTag, setActiveTag] = useState("All");
@@ -74,7 +68,7 @@ export default function StoriesPage() {
       {/* Stories grid */}
       <div className="max-w-6xl mx-auto px-12 py-12">
         <div className="flex justify-between items-center mb-7">
-          <p className="text-sm text-ink-3">Showing <strong className="text-ink">{stories.length}</strong> stories</p>
+          <p className="text-sm text-ink-3">Showing <strong className="text-ink">{stories.length}</strong> of <strong className="text-ink">200</strong> Indian destinations</p>
           <select className="px-4 py-2 rounded-full border border-mist-2 text-sm bg-white outline-none cursor-pointer">
             <option>Most Recent</option>
             <option>Most Liked</option>
