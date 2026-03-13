@@ -19,12 +19,12 @@ const DAILY = [
 ];
 
 const EXPENSES = [
-  { icon: "🏨", name: "Park Hyatt Tokyo", desc: "4 nights · Apr 1–5", date: "Apr 1", amount: -780 },
-  { icon: "✈️", name: "Shinkansen Pass", desc: "14-day JR Pass", date: "Apr 1", amount: -440 },
-  { icon: "🍜", name: "Sukiyabashi Jiro", desc: "Omakase dinner · 2 pax", date: "Apr 2", amount: -240 },
-  { icon: "🎭", name: "TeamLab Planets", desc: "Museum · 2 tickets", date: "Apr 3", amount: -68 },
-  { icon: "🛍️", name: "Harajuku Shopping", desc: "Souvenirs & streetwear", date: "Apr 4", amount: -80 },
-  { icon: "🏨", name: "Hakone Ryokan", desc: "2 nights · Traditional inn", date: "Apr 5", amount: -320 },
+  { icon: "🏨", name: "Taj Palace Delhi", desc: "4 nights · Apr 1–5", date: "Apr 1", amount: -780 },
+  { icon: "✈️", name: "Vande Bharat Pass", desc: "14-day Rail Pass", date: "Apr 1", amount: -140 },
+  { icon: "🍜", name: "Bukhara", desc: "Heritage dinner · 2 pax", date: "Apr 2", amount: -150 },
+  { icon: "🎭", name: "Red Fort", desc: "Monument · 2 tickets", date: "Apr 3", amount: -15 },
+  { icon: "🛍️", name: "Chandni Chowk", desc: "Spices & textiles", date: "Apr 4", amount: -80 },
+  { icon: "🏨", name: "Agra Heritage Hotel", desc: "2 nights · Old city", date: "Apr 5", amount: -320 },
 ];
 
 export default function BudgetPage() {
@@ -41,8 +41,8 @@ export default function BudgetPage() {
         </div>
         <div className="flex items-center gap-3">
           <select className="px-4 py-2.5 rounded-xl text-sm border outline-none" style={{ borderColor: "#ede9e3", background: "white" }}>
-            <option>Japan Spring 2026</option>
-            <option>Norway Fjords 2025</option>
+            <option>North India Tour 2026</option>
+            <option>Kerala Backwaters 2025</option>
           </select>
           <button onClick={() => setShowAdd(true)} className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white" style={{ background: "#0a0a0f" }}>
             + Add Expense
@@ -66,7 +66,7 @@ export default function BudgetPage() {
               <div className="text-xs mt-2 opacity-40">{Math.round((total/budget)*100)}% used · ${(budget-total).toLocaleString()} remaining</div>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              {[["📅", "Day 8", "of 14 days"], ["💵", "$167", "avg per day"], ["📍", "5", "cities"], ["🏦", "JPY", "currency"]].map(([ic, v, l]) => (
+              {[["📅", "Day 8", "of 14 days"], ["💵", "$167", "avg per day"], ["📍", "5", "cities"], ["🏦", "INR", "currency"]].map(([ic, v, l]) => (
                 <div key={l} className="p-4 rounded-xl" style={{ background: "rgba(255,255,255,0.06)" }}>
                   <div className="text-2xl mb-2">{ic}</div>
                   <div className="font-serif text-xl font-bold">{v}</div>

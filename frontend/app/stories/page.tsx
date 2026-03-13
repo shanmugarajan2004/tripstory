@@ -4,15 +4,15 @@ import { motion } from "framer-motion";
 import { useStories } from "@/hooks/useQueries";
 import { FeedCard, StoryCardSkeleton } from "@/components/StoryCard";
 
-const TAGS = ["All", "🏔️ Adventure", "🌸 Culture", "🍜 Food", "🏖️ Beach", "🌿 Nature", "🏙️ City", "🎒 Backpacking", "👨‍👩‍👧 Family"];
+const TAGS = ["All", "North India", "South India", "Heritage", "Nature", "Adventure", "Spiritual"];
 
 const MOCK_STORIES = [
-  { id: "1", title: "28 Days Chasing Cherry Blossoms Across Japan", location: "Tokyo, Kyoto, Osaka", image: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=600&q=80", author: "Aiko Tanaka", duration: "28 days · $3,200", tag: "🇯🇵 Japan", likes: 482, comments: 34, excerpt: "From Shinjuku chaos to Kyoto temple serenity — this trip changed everything." },
-  { id: "2", title: "Fjord Chasing: A 10-Day Norwegian Road Trip", location: "Bergen, Geirangerfjord", image: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&q=80", author: "Marcus Lund", duration: "10 days · $4,800", tag: "🇳🇴 Norway", likes: 891, comments: 67, excerpt: "Renting a campervan and driving through waterfalls, exactly as it should be." },
-  { id: "3", title: "La Dolce Vita: Italian Love Story in 3 Cities", location: "Venice, Florence, Rome", image: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=600&q=80", author: "Sofia Romano", duration: "12 days · $3,600", tag: "🇮🇹 Italy", likes: 623, comments: 45, excerpt: "Art, pasta, gelato, and crumbling beauty at every corner. Italy haunts you forever." },
-  { id: "4", title: "Morocco in 2 Weeks: Medinas, Dunes & Blue Cities", location: "Marrakech, Sahara, Chefchaouen", image: "https://images.unsplash.com/photo-1489493887464-892be6d1daae?w=600&q=80", author: "James Kim", duration: "14 days · $2,100", tag: "🇲🇦 Morocco", likes: 445, comments: 29, excerpt: "Colors, souks, and the silence of the Sahara at midnight." },
-  { id: "5", title: "Bali on $60/Day: A Digital Nomad's Full Guide", location: "Ubud, Canggu, Nusa Penida", image: "https://images.unsplash.com/photo-1540202404-a2f29016b523?w=600&q=80", author: "Luna Verde", duration: "21 days · $1,260", tag: "🇮🇩 Bali", likes: 1200, comments: 112, excerpt: "Co-working by day, cliff sunset sessions by evening — Bali delivers." },
-  { id: "6", title: "7 Days in Paradise: Overwater Bungalows", location: "Malé, Baa Atoll, Maldives", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80", author: "Priya & Dev", duration: "7 days · $6,800", tag: "🇲🇻 Maldives", likes: 738, comments: 58, excerpt: "Worth every penny. The kind of place that ruins all other beaches forever." },
+  { id: "1", title: "Sunrise at the Taj Mahal & Agra Fort", location: "Agra, Uttar Pradesh", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=600&q=80", author: "Rahul M.", duration: "3 days · ₹15,000", tag: "North India", likes: 1482, comments: 134, excerpt: "Witnessing the marble monument at dawn is an experience that transcends time." },
+  { id: "2", title: "Cruising the Backwaters in a Houseboat", location: "Alleppey, Kerala", image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80", author: "Sneha P.", duration: "4 days · ₹22,000", tag: "South India", likes: 891, comments: 67, excerpt: "Gliding through tranquil palm-fringed canals, eating fresh catch, pure bliss." },
+  { id: "3", title: "The Royal Palaces of the Pink City", location: "Jaipur, Rajasthan", image: "https://images.unsplash.com/photo-1477587635293-85f0ef3dbe26?w=600&q=80", author: "Karan S.", duration: "5 days · ₹18,000", tag: "North India", likes: 1623, comments: 145, excerpt: "Amber Fort, Hawa Mahal, and endless cups of cutting chai in the bazaars." },
+  { id: "4", title: "Ancient Ruins and Boulder Landscapes", location: "Hampi, Karnataka", image: "https://images.unsplash.com/photo-1620766165457-a80fe59217ca?w=600&q=80", author: "James K.", duration: "4 days · ₹12,000", tag: "South India", likes: 1445, comments: 129, excerpt: "Cycling through the Vijayanagara ruins feels like discovering a lost civilization." },
+  { id: "5", title: "Spiritual Awakening on the Ghats", location: "Varanasi, Uttar Pradesh", image: "https://images.unsplash.com/photo-1561359313-0639aad3ca84?w=600&q=80", author: "Luna V.", duration: "3 days · ₹10,000", tag: "North India", likes: 1200, comments: 112, excerpt: "The Ganga Aarti at dusk and the boat rides at dawn... absolutely magical." },
+  { id: "6", title: "Tea Gardens and Misty Mountains", location: "Munnar, Kerala", image: "https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=600&q=80", author: "Dev P.", duration: "5 days · ₹25,000", tag: "South India", likes: 1738, comments: 158, excerpt: "Waking up to endless rolling hills of green tea plantations above the clouds." },
 ];
 
 export default function StoriesPage() {
@@ -20,7 +20,10 @@ export default function StoriesPage() {
   const [search, setSearch] = useState("");
   const { data, isLoading } = useStories({ tag: activeTag === "All" ? undefined : activeTag, search: search || undefined });
 
-  const stories = data?.stories?.length ? data.stories : MOCK_STORIES;
+  const stories = data?.stories?.length ? data.stories : MOCK_STORIES.filter(s => 
+    (activeTag === "All" || s.tag === activeTag) && 
+    (search === "" || s.title.toLowerCase().includes(search.toLowerCase()) || s.location.toLowerCase().includes(search.toLowerCase()))
+  );
 
   return (
     <div className="min-h-screen pt-[72px]">

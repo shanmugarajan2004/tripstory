@@ -5,11 +5,11 @@ import { motion } from "framer-motion";
 import { useStore } from "@/store/useStore";
 
 const TRIPS = [
-  { name: "Japan Spring 2026", dates: "Apr 2026 · 5 stops", img: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=400&q=80" },
-  { name: "Norway Fjords 2025", dates: "Sep 2025 · 6 stops", img: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&q=80" },
-  { name: "Bali Escape 2025", dates: "Jul 2025 · 4 stops", img: "https://images.unsplash.com/photo-1540202404-a2f29016b523?w=400&q=80" },
-  { name: "Italy Road Trip", dates: "May 2025 · 8 stops", img: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=400&q=80" },
-  { name: "Morocco Desert", dates: "Mar 2025 · 4 stops", img: "https://images.unsplash.com/photo-1489493887464-892be6d1daae?w=400&q=80" },
+  { name: "North India Tour 2026", dates: "Apr 2026 · 5 stops", img: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80" },
+  { name: "Kerala Backwaters 2025", dates: "Sep 2025 · 6 stops", img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400&q=80" },
+  { name: "Goa Escape 2025", dates: "Jul 2025 · 4 stops", img: "https://images.unsplash.com/photo-1540202404-a2f29016b523?w=400&q=80" },
+  { name: "Rajasthan Road Trip", dates: "May 2025 · 8 stops", img: "https://images.unsplash.com/photo-1477587635293-85f0ef3dbe26?w=400&q=80" },
+  { name: "Andaman Islands", dates: "Mar 2025 · 4 stops", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80" },
 ];
 
 const TABS = ["Trips", "Stories", "Routes", "Saved", "Stats"];
@@ -57,11 +57,11 @@ export default function ProfilePage() {
         </div>
 
         <p className="text-sm leading-relaxed mb-4 max-w-xl" style={{ color: "#2e2e42" }}>
-          Digital nomad & travel storyteller. Chasing sunsets, street food, and stories worth telling. Currently based in Lisbon 🇵🇹 · Next: Japan 🇯🇵
+          Digital nomad & travel storyteller. Chasing sunsets, street food, and stories worth telling. Currently based in Mumbai 🇮🇳 · Next: North India 🇮🇳
         </p>
 
         <div className="flex gap-5 mb-8 text-sm flex-wrap" style={{ color: "#2e2e42" }}>
-          <span>📍 Lisbon, Portugal</span>
+          <span>📍 Mumbai, India</span>
           <span>🔗 alexjourney.com</span>
           <span>📸 @alex.journey</span>
         </div>

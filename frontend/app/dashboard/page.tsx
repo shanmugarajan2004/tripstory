@@ -183,10 +183,10 @@ export default function DashboardPage() {
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h2 className="text-base font-semibold mb-5">Recent Activity</h2>
               {[
-                { icon: "📖", text: "You published \"First 48 Hours in Kyoto\"", time: "2h ago" },
-                { icon: "🗺️", text: "Route saved for Japan 2026", time: "Yesterday" },
-                { icon: "💬", text: "Maya commented on your Bali story", time: "2 days ago" },
-                { icon: "❤️", text: "Norway story reached 500 likes!", time: "3 days ago" },
+                { icon: "📖", text: "You published \"First 48 Hours in Jaipur\"", time: "2h ago" },
+                { icon: "🗺️", text: "Route saved for North India 2026", time: "Yesterday" },
+                { icon: "💬", text: "Maya commented on your Goa story", time: "2 days ago" },
+                { icon: "❤️", text: "Kerala story reached 500 likes!", time: "3 days ago" },
               ].map((item, i) => (
                 <div key={i} className="flex gap-3 py-3 border-b border-mist last:border-0">
                   <div className="w-9 h-9 rounded-full bg-mist flex items-center justify-center text-base flex-shrink-0">{item.icon}</div>
@@ -200,7 +200,7 @@ export default function DashboardPage() {
 
             <div className="bg-gradient-to-br from-teal to-indigo-500 rounded-2xl p-6 text-white">
               <p className="text-xs uppercase tracking-widest opacity-70 mb-2">Next Adventure</p>
-              <h3 className="font-serif text-xl font-bold mb-1">Japan Spring 2026</h3>
+              <h3 className="font-serif text-xl font-bold mb-1">North India Tour 2026</h3>
               <p className="text-sm opacity-80 mb-4">April 1–14 · 5 cities · $3,800</p>
               <div className="bg-white/15 rounded-lg px-4 py-2 inline-block text-sm">
                 🗓️ Starts in 20 days

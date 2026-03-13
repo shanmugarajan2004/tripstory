@@ -4,15 +4,15 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 const TRIP = {
-  title: "Japan Spring 2026",
+  title: "North India Tour 2026",
   dates: "Apr 1 – Apr 14",
   budget: 3800,
   stops: [
-    { num: 1, city: "Tokyo 🇯🇵", dates: "Apr 1–5 · 4 nights", color: "#2d8f7b", activities: ["🌸 Shinjuku Gyoen", "🏯 Senso-ji Temple", "🍣 Tsukiji Market"] },
-    { num: 2, city: "Hakone ⛰️", dates: "Apr 5–7 · 2 nights", color: "#6b7bf7", activities: ["🌋 Mt. Fuji Views", "♨️ Onsen Ryokan"] },
-    { num: 3, city: "Kyoto 🏯", dates: "Apr 7–10 · 3 nights", color: "#c9a84c", activities: ["⛩️ Fushimi Inari", "🎋 Arashiyama Bamboo", "🍵 Tea Ceremony"] },
-    { num: 4, city: "Nara 🦌", dates: "Apr 10–11 · 1 night", color: "#e8634a", activities: ["🦌 Nara Deer Park", "🏛️ Todai-ji Temple"] },
-    { num: 5, city: "Osaka 🌃", dates: "Apr 11–14 · 3 nights", color: "#2e2e42", activities: ["🏰 Osaka Castle", "🍜 Dotonbori Food Tour", "🎡 Universal Studios"] },
+    { num: 1, city: "Delhi 🇮🇳", dates: "Apr 1–5 · 4 nights", color: "#2d8f7b", activities: ["🕌 Jama Masjid", "❤️ India Gate", "🍛 Chandni Chowk"] },
+    { num: 2, city: "Agra 🏰", dates: "Apr 5–7 · 2 nights", color: "#6b7bf7", activities: ["🕌 Taj Mahal Sunrise", "🏰 Agra Fort"] },
+    { num: 3, city: "Jaipur 🛕", dates: "Apr 7–10 · 3 nights", color: "#c9a84c", activities: ["🏰 Amber Fort", "🐘 Elephant Village", "🛕 Hawa Mahal"] },
+    { num: 4, city: "Pushkar 🐪", dates: "Apr 10–11 · 1 night", color: "#e8634a", activities: ["🐪 Camel Safari", "🌊 Pushkar Lake"] },
+    { num: 5, city: "Udaipur 🌊", dates: "Apr 11–14 · 3 nights", color: "#2e2e42", activities: ["🏰 City Palace", "🚤 Lake Pichola", "🌅 Sunset Point"] },
   ],
   budget_items: [
     { label: "Flights", amount: 1200 },
@@ -117,11 +117,11 @@ export default function PlannerPage() {
             </defs>
             <path d="M 490 180 L 480 240 L 450 300 L 435 330 L 420 370" stroke="#3dba9e" strokeWidth="2.5" fill="none" strokeDasharray="8,5" opacity="0.7"/>
             {[
-              { cx:490, cy:180, r:40, grad:"url(#pg1)", fc:"#3dba9e", label:"Tokyo", sub:"Apr 1–5", lx:508, ly:176 },
-              { cx:480, cy:240, r:28, grad:"url(#pg1)", fc:"#6b7bf7", label:"Hakone", sub:"Apr 5–7", lx:496, ly:236 },
-              { cx:450, cy:300, r:34, grad:"url(#pg2)", fc:"#c9a84c", label:"Kyoto", sub:"Apr 7–10", lx:466, ly:296 },
-              { cx:435, cy:330, r:22, grad:"url(#pg1)", fc:"#e8634a", label:"Nara", sub:"Apr 10–11", lx:450, ly:326 },
-              { cx:420, cy:370, r:36, grad:"url(#pg1)", fc:"#3dba9e", label:"Osaka", sub:"Apr 11–14", lx:438, ly:366 },
+              { cx:490, cy:180, r:40, grad:"url(#pg1)", fc:"#3dba9e", label:"Delhi", sub:"Apr 1–5", lx:508, ly:176 },
+              { cx:480, cy:240, r:28, grad:"url(#pg1)", fc:"#6b7bf7", label:"Agra", sub:"Apr 5–7", lx:496, ly:236 },
+              { cx:450, cy:300, r:34, grad:"url(#pg2)", fc:"#c9a84c", label:"Jaipur", sub:"Apr 7–10", lx:466, ly:296 },
+              { cx:435, cy:330, r:22, grad:"url(#pg1)", fc:"#e8634a", label:"Pushkar", sub:"Apr 10–11", lx:450, ly:326 },
+              { cx:420, cy:370, r:36, grad:"url(#pg1)", fc:"#3dba9e", label:"Udaipur", sub:"Apr 11–14", lx:438, ly:366 },
             ].map((m,i)=>(
               <g key={i}>
                 <circle cx={m.cx} cy={m.cy} r={m.r} fill={m.grad} opacity="0.5"/>
@@ -134,7 +134,7 @@ export default function PlannerPage() {
           </svg>
 
           <div className="absolute top-5 left-5 backdrop-blur-md rounded-xl px-4 py-3" style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.15)" }}>
-            <div className="text-xs mb-1" style={{ color: "rgba(255,255,255,0.6)" }}>Japan Spring 2026</div>
+            <div className="text-xs mb-1" style={{ color: "rgba(255,255,255,0.6)" }}>North India Tour 2026</div>
             <div className="text-base font-semibold text-white">5 Cities · 14 Days</div>
             <div className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.5)" }}>~2,400 km total</div>
           </div>

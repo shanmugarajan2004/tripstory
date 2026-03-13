@@ -12,14 +12,14 @@ const FEATURES = [
 ];
 
 const STORIES = [
-  { title: "28 Days Across Norwegian Fjords", location: "Bergen, Norway", duration: "28 days", budget: 4800, image: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&q=80", author: "Marcus L.", tag: "Adventure" },
-  { title: "Tokyo Cherry Blossom Season", location: "Tokyo, Japan", duration: "7 days", budget: 3200, image: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=600&q=80", author: "Aiko T.", tag: "Culture" },
-  { title: "Venice Hidden Canals", location: "Venice, Italy", duration: "5 days", budget: 2800, image: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=600&q=80", author: "Sofia R.", tag: "Food" },
+  { title: "The Taj Mahal at Sunrise", location: "Agra, North India", duration: "3 days", budget: 450, image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=600&q=80", author: "Rahul M.", tag: "Heritage" },
+  { title: "Backwaters of Alleppey", location: "Kerala, South India", duration: "5 days", budget: 600, image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80", author: "Sneha P.", tag: "Nature" },
+  { title: "Palaces of Jaipur", location: "Rajasthan, North India", duration: "7 days", budget: 850, image: "https://images.unsplash.com/photo-1477587635293-85f0ef3dbe26?w=600&q=80", author: "Karan S.", tag: "Culture" },
 ];
 
 const TESTIMONIALS = [
   { text: "TripStory completely changed how I document travels. Instead of scattered notes, everything is in one gorgeous place.", author: "Maya Chen", role: "Digital Nomad · 32 countries", initial: "M", gradient: "from-teal to-indigo-500" },
-  { text: "The budget tracker alone is worth it. I actually came home from Thailand under budget for the first time ever.", author: "Raj Patel", role: "Backpacker · 18 countries", initial: "R", gradient: "from-orange-400 to-yellow-400" },
+  { text: "The budget tracker alone is worth it. I actually came home from my Kerala trip under budget for the first time ever.", author: "Raj Patel", role: "Backpacker · 18 countries", initial: "R", gradient: "from-orange-400 to-yellow-400" },
   { text: "We use TripStory for every family vacation now. The itinerary planner keeps everyone on the same page.", author: "Sophie Durant", role: "Family Traveler · 24 countries", initial: "S", gradient: "from-indigo-500 to-teal" },
 ];
 
@@ -235,7 +235,7 @@ export default function HomePage() {
               <div key={col.title}>
                 <h4 className="text-xs font-semibold uppercase tracking-widest text-white mb-5">{col.title}</h4>
                 <ul className="space-y-3">
-                  {col.links.map(l => <li key={l}><a className="text-sm hover:text-white transition-colors cursor-pointer">{l}</a></li>)}
+                  {col.links.map(l => <li key={l}><Link href={l === "Explore Stories" ? "/stories" : "#"} className="text-sm hover:text-white transition-colors cursor-pointer">{l}</Link></li>)}
                 </ul>
               </div>
             ))}

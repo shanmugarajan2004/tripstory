@@ -3,17 +3,17 @@ import { useState } from "react";
 import Link from "next/link";
 
 const ROUTES = [
-  { id: 1, name: "Japan Spring 2026", stops: 5, km: 2400, dates: "Apr 1–14", active: true },
-  { id: 2, name: "Norway Fjords 2025", stops: 6, km: 3200, dates: "Sep 2025", active: false },
-  { id: 3, name: "Bali Escape 2025", stops: 4, km: 580, dates: "Jul 2025", active: false },
+  { id: 1, name: "North India Tour 2026", stops: 5, km: 2400, dates: "Apr 1–14", active: true },
+  { id: 2, name: "Kerala Backwaters 2025", stops: 6, km: 3200, dates: "Sep 2025", active: false },
+  { id: 3, name: "Goa Escape 2025", stops: 4, km: 580, dates: "Jul 2025", active: false },
 ];
 
 const STOPS = [
-  { num: 1, name: "Tokyo", dates: "Apr 1–5", color: "#3dba9e", cx: 490, cy: 180 },
-  { num: 2, name: "Hakone", dates: "Apr 5–7", color: "#6b7bf7", cx: 480, cy: 240 },
-  { num: 3, name: "Kyoto", dates: "Apr 7–10", color: "#c9a84c", cx: 450, cy: 300 },
-  { num: 4, name: "Nara", dates: "Apr 10–11", color: "#e8634a", cx: 435, cy: 335 },
-  { num: 5, name: "Osaka", dates: "Apr 11–14", color: "#2e2e42", cx: 420, cy: 370 },
+  { num: 1, name: "Delhi", dates: "Apr 1–5", color: "#3dba9e", cx: 490, cy: 180 },
+  { num: 2, name: "Agra", dates: "Apr 5–7", color: "#6b7bf7", cx: 480, cy: 240 },
+  { num: 3, name: "Jaipur", dates: "Apr 7–10", color: "#c9a84c", cx: 450, cy: 300 },
+  { num: 4, name: "Pushkar", dates: "Apr 10–11", color: "#e8634a", cx: 435, cy: 335 },
+  { num: 5, name: "Udaipur", dates: "Apr 11–14", color: "#2e2e42", cx: 420, cy: 370 },
 ];
 
 export default function MapPage() {
@@ -51,7 +51,7 @@ export default function MapPage() {
             ))}
           </div>
 
-          <p className="text-[10px] font-semibold uppercase tracking-widest mb-3" style={{ color: "#2e2e42" }}>Japan Route Stops</p>
+          <p className="text-[10px] font-semibold uppercase tracking-widest mb-3" style={{ color: "#2e2e42" }}>North India Route Stops</p>
           <div className="space-y-3">
             {STOPS.map(s => (
               <div key={s.num} className="flex items-center gap-3 cursor-pointer hover:translate-x-1 transition-transform">
@@ -100,10 +100,10 @@ export default function MapPage() {
           <circle cx={655} cy={240} r={38} fill="url(#mr1)" opacity="0.6"/>
           <circle cx={655} cy={240} r={13} fill="#3dba9e" opacity="0.9"/>
           <circle cx={655} cy={240} r={5.5} fill="white"/>
-          <text x={673} y={236} fill="white" fontSize="13" fontFamily="sans-serif" fontWeight="700">Tokyo</text>
+          <text x={673} y={236} fill="white" fontSize="13" fontFamily="sans-serif" fontWeight="700">Delhi</text>
           <text x={673} y={252} fill="rgba(255,255,255,0.5)" fontSize="10" fontFamily="sans-serif">Current Route</text>
 
-          {/* Japan detail route */}
+          {/* North India detail route */}
           <path d="M 655 240 L 648 272 L 638 308 L 628 338 L 615 375" stroke="#c9a84c" strokeWidth="1.5" fill="none" strokeDasharray="6,4" opacity="0.5"/>
           {STOPS.slice(1).map((s,i)=>{
             const positions = [{cx:648,cy:272},{cx:638,cy:308},{cx:628,cy:338},{cx:615,cy:375}];
@@ -117,7 +117,7 @@ export default function MapPage() {
 
         {/* Legend */}
         <div className="absolute top-6 right-6 bg-white rounded-xl p-5 shadow-xl" style={{ minWidth: 180 }}>
-          <p className="text-xs font-semibold uppercase tracking-wide mb-3" style={{ color: "#2e2e42" }}>Japan Spring 2026</p>
+          <p className="text-xs font-semibold uppercase tracking-wide mb-3" style={{ color: "#2e2e42" }}>North India Tour 2026</p>
           {STOPS.map(s => (
             <div key={s.num} className="flex items-center gap-2 mb-3 last:mb-0">
               <div className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0" style={{ background: s.color }}>{s.num}</div>
