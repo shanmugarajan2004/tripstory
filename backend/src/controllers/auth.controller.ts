@@ -3,6 +3,9 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
+import { OAuth2Client } from 'google-auth-library';
+
+const googleClient = new OAuth2Client('961796189996-td933k6ioe62p6vb9a7aa5m67n9vgmam.apps.googleusercontent.com');
 
 const prisma = new PrismaClient();
 
@@ -109,5 +112,49 @@ export const changePassword = async (req: Request, res: Response, next: NextFunc
     res.json({ message: 'Password updated successfully' });
   } catch (err) {
     next(err);
+  }
+};
+
+export const googleLogin = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { token } = req.body; // This is the access_token
+    if (!token) return res.status(400).json({ error: 'Token is required' });
+
+    // Fetch user profile from Google
+    const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    
+    if (!response.ok) {
+        return res.status(401).json({ error: 'Invalid Google token' });
+    }
+    
+    const payload = await response.json() as any;
+    if (!payload || !payload.email) {
+      return res.status(401).json({ error: 'Invalid Google token payload' });
+    }
+
+    const { email, name, picture } = payload;
+    let user = await prisma.user.findUnique({ where: { email } });
+
+    if (!user) {
+      // Create a random password since password is required by schema
+      const randomPassword = await bcrypt.hash(Math.random().toString(36).slice(-8) + Date.now().toString(), 12);
+      user = await prisma.user.create({
+        data: {
+          name: name || 'Google User',
+          email,
+          password: randomPassword,
+          avatar: picture,
+        },
+      });
+    }
+
+    const { password: _, ...userWithoutPassword } = user;
+    const jwtToken = signToken(user.id);
+    res.json({ user: userWithoutPassword, token: jwtToken });
+  } catch (err) {
+    console.error('Google login error:', err);
+    res.status(401).json({ error: 'Authentication failed' });
   }
 };

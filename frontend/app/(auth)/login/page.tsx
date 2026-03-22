@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useStore } from "@/store/useStore";
+import { useGoogleLogin } from '@react-oauth/google';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -12,6 +13,31 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      setLoading(true);
+      setError("");
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api"}/auth/google`,
+          { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token: tokenResponse.access_token }) }
+        );
+        if (res.ok) {
+          const { user, token } = await res.json();
+          setAuth(user, token);
+          router.push("/dashboard");
+        } else {
+          setError("Google login failed");
+          setLoading(false);
+        }
+      } catch {
+        setError("Network error during Google login.");
+        setLoading(false);
+      }
+    },
+    onError: () => setError("Google login failed"),
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,13 +110,7 @@ export default function LoginPage() {
           <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
-              onClick={() => {
-                setLoading(true);
-                setTimeout(() => {
-                  setAuth({ id: "demo-google", name: "Google User", email: "google@demo.com" }, "demo-token");
-                  router.push("/dashboard");
-                }, 800);
-              }}
+              onClick={() => handleGoogleLogin()}
               className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-colors hover:bg-gray-50 hover:cursor-pointer"
               style={{ border: "1.5px solid #ede9e3", background: "white" }}
             >

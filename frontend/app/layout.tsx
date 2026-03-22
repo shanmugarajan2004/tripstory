@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Navbar } from "@/components/Navbar";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -28,8 +29,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-[#faf8f4] text-[#0a0a0f] antialiased">
         <Providers>
-          <Navbar />
-          {children}
+          <GoogleOAuthProvider clientId="961796189996-td933k6ioe62p6vb9a7aa5m67n9vgmam.apps.googleusercontent.com">
+            <Navbar />
+            {children}
+          </GoogleOAuthProvider>
         </Providers>
         <Analytics />
       </body>

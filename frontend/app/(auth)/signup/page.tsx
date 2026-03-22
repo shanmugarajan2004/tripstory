@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useStore } from "@/store/useStore";
+import { useGoogleLogin } from '@react-oauth/google';
 
 export default function SignupPage() {
   const router = useRouter();
@@ -11,6 +12,31 @@ export default function SignupPage() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      setLoading(true);
+      setError("");
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api"}/auth/google`,
+          { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token: tokenResponse.access_token }) }
+        );
+        if (res.ok) {
+          const { user, token } = await res.json();
+          setAuth(user, token);
+          router.push("/dashboard");
+        } else {
+          setError("Google signup failed");
+          setLoading(false);
+        }
+      } catch {
+        setError("Network error during Google signup.");
+        setLoading(false);
+      }
+    },
+    onError: () => setError("Google signup failed"),
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

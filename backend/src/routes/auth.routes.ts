@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
-import { signup, login, getProfile, updateProfile, changePassword } from '../controllers/auth.controller';
+import { signup, login, googleLogin, getProfile, updateProfile, changePassword } from '../controllers/auth.controller';
 import { authenticate } from '../middleware/auth.middleware';
 
 export const authRouter = Router();
@@ -21,6 +21,8 @@ authRouter.post('/login',
   ],
   login
 );
+
+authRouter.post('/google', googleLogin);
 
 authRouter.get('/profile', authenticate, getProfile);
 authRouter.put('/profile', authenticate, updateProfile);
