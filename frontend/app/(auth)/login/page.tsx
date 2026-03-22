@@ -25,7 +25,11 @@ export default function LoginPage() {
         if (res.ok) {
           const { user, token } = await res.json();
           setAuth(user, token); router.push("/dashboard");
-        } else { setError("Authentication failure."); setLoading(false); }
+        } else { 
+          const errData = await res.json().catch(() => ({}));
+          setError(`Authentication failure: ${errData.error || res.statusText}`); 
+          setLoading(false); 
+        }
       } catch (err: any) { setError(`SYS.ERR: ${err.message}`); setLoading(false); }
     },
     onError: () => setError("Google OAuth proxy disconnected."),

@@ -153,8 +153,8 @@ export const googleLogin = async (req: Request, res: Response, next: NextFunctio
     const { password: _, ...userWithoutPassword } = user;
     const jwtToken = signToken(user.id);
     res.json({ user: userWithoutPassword, token: jwtToken });
-  } catch (err) {
+  } catch (err: any) {
     console.error('Google login error:', err);
-    res.status(401).json({ error: 'Authentication failed' });
+    res.status(401).json({ error: err.message || 'Authentication failed' });
   }
 };
