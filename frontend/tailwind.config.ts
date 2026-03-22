@@ -9,33 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"DM Sans"', "sans-serif"],
-        serif: ["Fraunces", "serif"],
+        sans: ['"Inter"', "sans-serif"],
+        serif: ['"Space Grotesk"', "sans-serif"],
       },
       colors: {
-        ink: {
-          DEFAULT: "#0a0a0f",
-          2: "#1c1c28",
-          3: "#2e2e42",
-        },
-        mist: {
-          DEFAULT: "#f5f4f0",
-          2: "#ede9e3",
-        },
-        cream: "#faf8f4",
-        gold: {
-          DEFAULT: "#c9a84c",
-          light: "#e8c96a",
-        },
-        teal: {
-          DEFAULT: "#2d8f7b",
-          light: "#3dba9e",
-        },
-        coral: {
-          DEFAULT: "#e8634a",
-          light: "#f28469",
-        },
-        sand: "#d4b896",
+        background: "#050505",
+        foreground: "#f8f9fa",
+        card: "#0d0d0f",
+        cardBorder: "#1f1f2e",
+        primary: "#3b82f6",
+        cyan: "#06b6d4",
+        purple: "#8b5cf6",
+        muted: "#8A8F98",
       },
       borderRadius: {
         "2xl": "16px",
@@ -43,9 +28,9 @@ const config: Config = {
         "4xl": "32px",
       },
       boxShadow: {
-        soft: "0 8px 32px rgba(10,10,15,0.12)",
-        hard: "0 20px 60px rgba(10,10,15,0.18)",
-        xl: "0 32px 80px rgba(10,10,15,0.25)",
+        glow: "0 0 20px rgba(59, 130, 246, 0.5)",
+        cyanGlow: "0 0 20px rgba(6, 182, 212, 0.4)",
+        glass: "inset 0 1px 1px rgba(255, 255, 255, 0.1)",
       },
       spacing: {
         18: "4.5rem",

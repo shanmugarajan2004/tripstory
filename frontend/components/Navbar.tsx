@@ -4,13 +4,13 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useStore } from "@/store/useStore";
+import { Hexagon } from "lucide-react";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useStore();
-  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -20,73 +20,60 @@ export function Navbar() {
 
   const handleLogout = () => { logout(); router.push("/"); };
 
-  const dark = isHome && !scrolled;
-
   return (
     <motion.nav
       initial={{ y: -72 }} animate={{ y: 0 }} transition={{ duration: 0.4 }}
-      style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, height: 72,
-        display: "flex", alignItems: "center", padding: "0 48px", justifyContent: "space-between",
-        background: dark ? "transparent" : "rgba(250,248,244,0.95)",
-        backdropFilter: dark ? "none" : "blur(20px)",
-        borderBottom: dark ? "none" : "1px solid rgba(10,10,15,0.06)",
-        transition: "all 0.3s",
-      }}
+      className={`fixed top-0 left-0 right-0 z-50 h-[72px] flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${
+        scrolled ? "bg-background/80 backdrop-blur-xl border-b border-white/10" : "bg-transparent border-b border-transparent"
+      }`}
     >
-      <Link href="/" style={{ fontFamily: "serif", fontSize: 20, fontWeight: 700, color: dark ? "white" : "#0a0a0f", display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
-        <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#c9a84c", display: "inline-block" }} />
-        TripStory
+      <Link href="/" className="font-serif text-xl font-bold flex items-center gap-2 group">
+        <Hexagon className="w-6 h-6 text-primary group-hover:text-cyan transition-colors" />
+        <span className="hidden sm:block bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">TripStory</span>
       </Link>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 36 }}>
+      <div className="hidden md:flex items-center gap-8">
         {[
-          { href: "/", label: "Home" },
-          { href: "/stories", label: "Explore" },
-          { href: "/planner", label: "Planner" },
-          { href: "/budget", label: "Budget" },
-          { href: "/map", label: "Maps" },
-        ].map(item => (
-          <Link key={item.href} href={item.href} style={{
-            fontSize: 13, fontWeight: 500, textDecoration: "none",
-            color: pathname === item.href
-              ? (dark ? "white" : "#0a0a0f")
-              : (dark ? "rgba(255,255,255,0.7)" : "#2e2e42"),
-            transition: "color 0.2s"
-          }}>
-            {item.label}
-          </Link>
-        ))}
+          { href: "/", label: "Network" },
+          { href: "/stories", label: "Logs" },
+          { href: "/planner", label: "Router" },
+          { href: "/budget", label: "Ledger" },
+          { href: "/map", label: "Cartography" },
+        ].map(item => {
+          const active = pathname === item.href;
+          return (
+            <Link key={item.href} href={item.href} className={`text-sm font-medium transition-colors ${
+              active ? "text-cyan drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]" : "text-muted hover:text-foreground"
+            }`}>
+              {item.label}
+            </Link>
+          )
+        })}
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <div className="flex items-center gap-4">
         {user ? (
           <>
-            <Link href="/dashboard" style={{ padding: "8px 20px", borderRadius: 99, fontSize: 13, fontWeight: 500, textDecoration: "none", color: dark ? "rgba(255,255,255,0.8)" : "#2e2e42" }}>
-              Dashboard
+            <Link href="/dashboard" className="text-sm font-medium text-muted hover:text-foreground transition-colors px-2 py-2">
+              Console
             </Link>
             <div
               onClick={() => router.push("/profile")}
-              style={{ width: 36, height: 36, borderRadius: "50%", background: "linear-gradient(135deg,#2d8f7b,#4a5aef)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
+              className="w-9 h-9 rounded-full bg-gradient-to-tr from-primary to-purple flex items-center justify-center text-white text-sm font-bold cursor-pointer hover:shadow-cyanGlow transition-shadow border border-white/10"
             >
               {user.name?.[0]?.toUpperCase()}
             </div>
-            <button onClick={handleLogout} style={{ fontSize: 12, color: dark ? "rgba(255,255,255,0.5)" : "#2e2e42", background: "none", border: "none", cursor: "pointer" }}>
-              Logout
+            <button onClick={handleLogout} className="text-xs font-semibold uppercase tracking-widest text-muted hover:text-coral transition-colors">
+              Abort
             </button>
           </>
         ) : (
           <>
-            <Link href="/login" style={{ padding: "8px 20px", borderRadius: 99, fontSize: 13, fontWeight: 500, textDecoration: "none", color: dark ? "rgba(255,255,255,0.8)" : "#2e2e42" }}>
-              Login
+            <Link href="/login" className="text-sm font-medium text-muted hover:text-foreground transition-colors px-4 py-2 rounded-full hover:bg-white/5">
+              Access
             </Link>
-            <Link href="/signup" style={{
-              padding: "10px 22px", borderRadius: 99, fontSize: 13, fontWeight: 600, textDecoration: "none",
-              background: dark ? "white" : "#0a0a0f",
-              color: dark ? "#0a0a0f" : "white",
-              transition: "all 0.2s"
-            }}>
-              Start for Free
+            <Link href="/signup" className="text-sm font-bold text-white px-5 py-2 rounded-full bg-primary hover:bg-primary/90 shadow-[0_0_15px_rgba(59,130,246,0.5)] transition-all">
+              Initialize
             </Link>
           </>
         )}
