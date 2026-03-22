@@ -31,8 +31,8 @@ export default function LoginPage() {
           setError("Google login failed");
           setLoading(false);
         }
-      } catch {
-        setError("Network error during Google login.");
+      } catch (err: any) {
+        setError(`Network error: ${err.message}. Fetch URL: ${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'}`);
         setLoading(false);
       }
     },

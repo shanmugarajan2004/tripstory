@@ -30,8 +30,8 @@ export default function SignupPage() {
           setError("Google signup failed");
           setLoading(false);
         }
-      } catch {
-        setError("Network error during Google signup.");
+      } catch (err: any) {
+        setError(`Network error: ${err.message}. Fetch URL: ${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'}`);
         setLoading(false);
       }
     },
