@@ -46,7 +46,7 @@ export default function LoginPage() {
     if (email && password.length >= 3) {
       setAuth({ id: "demo-1", name: email.split("@")[0] || "User", email }, "demo-token");
       router.push("/dashboard");
-    } else { setError("Invalid credentials provided."); setLoading(false); }
+    } else { setError("Enter your email and a password to continue."); setLoading(false); }
   };
 
   return (
@@ -57,45 +57,45 @@ export default function LoginPage() {
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px]" />
         <div className="relative z-10 text-center flex flex-col items-center">
           <Shield className="w-24 h-24 text-primary mx-auto mb-8 opacity-80" />
-          <h2 className="font-serif text-4xl font-bold tracking-tight mb-4">Secure Gateway</h2>
-          <p className="text-muted max-w-sm text-balance">Enter your credentials to access the global travel intelligence network.</p>
+          <p className="font-serif text-3xl text-white font-medium italic leading-snug mb-4 max-w-sm">&ldquo;Not all those who wander are lost — but all who use TripStory know exactly where they&apos;ve been.&rdquo;</p>
+          <p className="text-sm text-muted">Welcome back, explorer.</p>
         </div>
       </div>
 
       {/* RIGHT FORM */}
       <div className="flex-1 flex flex-col items-center justify-center p-8 lg:p-16 relative">
-        <Link href="/" className="absolute top-8 left-8 text-[10px] font-bold tracking-widest uppercase text-muted hover:text-foreground transition-colors">
-          ← Abort Sequence
+        <Link href="/" className="absolute top-8 left-8 text-xs font-bold uppercase text-muted hover:text-foreground transition-colors">
+          ← Back to Home
         </Link>
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-sm">
-          <h1 className="font-serif text-3xl font-bold mb-2">Initialize Session</h1>
-          <p className="text-sm text-muted mb-8">Establish secure connection string</p>
+          <h1 className="font-serif text-4xl font-bold mb-2 tracking-tight">Welcome back</h1>
+          <p className="text-sm text-muted mb-8">Sign in to continue your journey</p>
 
           {error && <div className="text-xs font-mono p-3 rounded bg-red-500/10 border border-red-500/20 text-red-500 mb-6">{error}</div>}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-muted uppercase tracking-widest">Communication Link</label>
+              <label className="text-xs font-bold text-muted uppercase tracking-widest">Email address</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
-                <input type="email" value={email} onChange={e=>setEmail(e.target.value)} required className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-primary/50 focus:bg-white/10 transition-all text-sm placeholder:text-muted/50 font-mono" placeholder="sysadmin@example.com" />
+                <input type="email" value={email} onChange={e=>setEmail(e.target.value)} required className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-primary/50 focus:bg-white/10 transition-all text-sm placeholder:text-muted/50 font-mono" placeholder="you@email.com" />
               </div>
             </div>
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-muted uppercase tracking-widest">Passcode</label>
+              <label className="text-xs font-bold text-muted uppercase tracking-widest">Password</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
                 <input type="password" value={password} onChange={e=>setPassword(e.target.value)} required className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-primary/50 focus:bg-white/10 transition-all text-sm placeholder:text-muted/50 font-mono" placeholder="••••••••" />
               </div>
             </div>
-            <button type="submit" disabled={loading} className="w-full py-3.5 mt-2 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-primary/90 shadow-[0_0_15px_rgba(59,130,246,0.5)] transition-all flex justify-center items-center gap-2">
-              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Authenticate"}
+            <button type="submit" disabled={loading} className="w-full py-3.5 mt-2 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-primary/90 shadow-glow transition-all flex justify-center items-center gap-2">
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Sign In"}
             </button>
           </form>
 
           <div className="relative my-8">
             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/5" /></div>
-            <div className="relative flex justify-center text-[10px]"><span className="bg-background px-2 text-muted uppercase tracking-widest font-bold">External SSO</span></div>
+            <div className="relative flex justify-center text-[10px]"><span className="bg-background px-2 text-muted uppercase tracking-widest font-bold">OR</span></div>
           </div>
 
           <div className="grid grid-cols-2 gap-3 mb-8">
@@ -111,7 +111,7 @@ export default function LoginPage() {
             </button>
           </div>
           
-          <p className="text-center text-xs text-muted mt-8 pt-8 border-t border-white/5">Unregistered node? <Link href="/signup" className="text-primary hover:text-cyan transition-colors font-semibold">Deploy new cluster</Link></p>
+          <p className="text-center text-xs text-muted mt-8 pt-8 border-t border-white/5">No account? <Link href="/signup" className="text-primary hover:text-cyan transition-colors font-semibold">Create one free</Link></p>
         </motion.div>
       </div>
     </div>

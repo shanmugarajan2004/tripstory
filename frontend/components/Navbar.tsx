@@ -34,11 +34,11 @@ export function Navbar() {
 
       <div className="hidden md:flex items-center gap-8">
         {[
-          { href: "/", label: "Network" },
-          { href: "/stories", label: "Logs" },
-          { href: "/planner", label: "Router" },
-          { href: "/budget", label: "Ledger" },
-          { href: "/map", label: "Cartography" },
+          { href: "/", label: "Home" },
+          { href: "/stories", label: "Explore" },
+          { href: "/planner", label: "Planner" },
+          { href: "/budget", label: "Budget" },
+          { href: "/map", label: "Maps" },
         ].map(item => {
           const active = pathname === item.href;
           return (
@@ -55,7 +55,7 @@ export function Navbar() {
         {user ? (
           <>
             <Link href="/dashboard" className="text-sm font-medium text-muted hover:text-foreground transition-colors px-2 py-2">
-              Console
+              Dashboard
             </Link>
             <div
               onClick={() => router.push("/profile")}
@@ -64,16 +64,16 @@ export function Navbar() {
               {user.name?.[0]?.toUpperCase()}
             </div>
             <button onClick={handleLogout} className="text-xs font-semibold uppercase tracking-widest text-muted hover:text-coral transition-colors">
-              Abort
+              Logout
             </button>
           </>
         ) : (
           <>
             <Link href="/login" className="text-sm font-medium text-muted hover:text-foreground transition-colors px-4 py-2 rounded-full hover:bg-white/5">
-              Access
+              Login
             </Link>
             <Link href="/signup" className="text-sm font-bold text-white px-5 py-2 rounded-full bg-primary hover:bg-primary/90 shadow-[0_0_15px_rgba(59,130,246,0.5)] transition-all">
-              Initialize
+              Start for Free
             </Link>
           </>
         )}

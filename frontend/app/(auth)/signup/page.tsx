@@ -26,7 +26,7 @@ export default function SignupPage() {
         if (res.ok) {
           const { user, token } = await res.json();
           setAuth(user, token); router.push("/dashboard");
-        } else { setError("Node registration failure."); setLoading(false); }
+        } else { setError("Registration failure."); setLoading(false); }
       } catch (err: any) { setError(`SYS.ERR: ${err.message}`); setLoading(false); }
     },
     onError: () => setError("Google OAuth proxy disconnected."),
@@ -47,7 +47,7 @@ export default function SignupPage() {
     if (email && password.length >= 3 && name) {
       setAuth({ id: "demo-new", name, email }, "demo-token");
       router.push("/dashboard");
-    } else { setError("Invalid node parameters."); setLoading(false); }
+    } else { setError("Enter valid details to continue."); setLoading(false); }
   };
 
   return (
@@ -58,52 +58,52 @@ export default function SignupPage() {
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px]" />
         <div className="relative z-10 text-center flex flex-col items-center">
           <Database className="w-24 h-24 text-purple mx-auto mb-8 opacity-80" />
-          <h2 className="font-serif text-4xl font-bold tracking-tight mb-4">Node Registry</h2>
-          <p className="text-muted max-w-sm text-balance">Create a dedicated cluster on the global travel intelligence network.</p>
+          <p className="font-serif text-3xl text-white font-medium italic leading-snug mb-4 max-w-sm">&ldquo;Every journey has a beginning. Start documenting yours beautifully.&rdquo;</p>
+          <p className="text-sm text-muted">Join the community.</p>
         </div>
       </div>
 
       {/* RIGHT FORM */}
       <div className="flex-1 flex flex-col items-center justify-center p-8 lg:p-16 relative">
-        <Link href="/" className="absolute top-8 left-8 text-[10px] font-bold tracking-widest uppercase text-muted hover:text-foreground transition-colors">
-          ← Abort Sequence
+        <Link href="/" className="absolute top-8 left-8 text-xs font-bold tracking-widest uppercase text-muted hover:text-foreground transition-colors">
+          ← Back to Home
         </Link>
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-sm">
-          <h1 className="font-serif text-3xl font-bold mb-2">Deploy Cluster</h1>
-          <p className="text-sm text-muted mb-8">Establish a new operational account</p>
+          <h1 className="font-serif text-4xl font-bold tracking-tight mb-2">Create an account</h1>
+          <p className="text-sm text-muted mb-8">Start your journey today</p>
 
           {error && <div className="text-xs font-mono p-3 rounded bg-red-500/10 border border-red-500/20 text-red-500 mb-6">{error}</div>}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-muted uppercase tracking-widest">Node Alias</label>
+              <label className="text-xs font-bold text-muted uppercase tracking-widest">Full Name</label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
-                <input type="text" value={name} onChange={e=>setName(e.target.value)} required className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-purple/50 focus:bg-white/10 transition-all text-sm placeholder:text-muted/50 font-mono" placeholder="Commander Shepard" />
+                <input type="text" value={name} onChange={e=>setName(e.target.value)} required className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-purple/50 focus:bg-white/10 transition-all text-sm placeholder:text-muted/50 font-mono" placeholder="John Doe" />
               </div>
             </div>
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-muted uppercase tracking-widest">Communication Link</label>
+              <label className="text-xs font-bold text-muted uppercase tracking-widest">Email address</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
-                <input type="email" value={email} onChange={e=>setEmail(e.target.value)} required className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-purple/50 focus:bg-white/10 transition-all text-sm placeholder:text-muted/50 font-mono" placeholder="sysadmin@example.com" />
+                <input type="email" value={email} onChange={e=>setEmail(e.target.value)} required className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-purple/50 focus:bg-white/10 transition-all text-sm placeholder:text-muted/50 font-mono" placeholder="you@email.com" />
               </div>
             </div>
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-muted uppercase tracking-widest">Passcode</label>
+              <label className="text-xs font-bold text-muted uppercase tracking-widest">Password</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
                 <input type="password" value={password} onChange={e=>setPassword(e.target.value)} required className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 outline-none focus:border-purple/50 focus:bg-white/10 transition-all text-sm placeholder:text-muted/50 font-mono" placeholder="••••••••" />
               </div>
             </div>
             <button type="submit" disabled={loading} className="w-full py-3.5 mt-2 rounded-xl bg-purple text-white text-sm font-semibold hover:bg-purple/90 shadow-[0_0_15px_rgba(139,92,246,0.5)] transition-all flex justify-center items-center gap-2">
-              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Deploy Protocol"}
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Sign Up"}
             </button>
           </form>
 
           <div className="relative my-8">
             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/5" /></div>
-            <div className="relative flex justify-center text-[10px]"><span className="bg-background px-2 text-muted uppercase tracking-widest font-bold">External SSO</span></div>
+            <div className="relative flex justify-center text-[10px]"><span className="bg-background px-2 text-muted uppercase tracking-widest font-bold">OR</span></div>
           </div>
 
           <div className="grid grid-cols-2 gap-3 mb-8">
@@ -119,7 +119,7 @@ export default function SignupPage() {
             </button>
           </div>
           
-          <p className="text-center text-xs text-muted mt-8 pt-8 border-t border-white/5">Active operational account? <Link href="/login" className="text-purple hover:text-cyan transition-colors font-semibold">Initialize session</Link></p>
+          <p className="text-center text-xs text-muted mt-8 pt-8 border-t border-white/5">Already have an account? <Link href="/login" className="text-purple hover:text-cyan transition-colors font-semibold">Sign in</Link></p>
         </motion.div>
       </div>
     </div>
